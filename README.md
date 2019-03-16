@@ -1,6 +1,8 @@
 # Canorous
 
-A Modern SNS Application for Sharing Musics with Friends. Made with :sparkling_heart: with Flutter
+A Free Modern SNS Application for Sharing Awesome Musics with Friends :sparkles:
+
+Made with :sparkling_heart: with Flutter
 
 ## WIP
 
