@@ -1,6 +1,10 @@
-# canorous
+# Canorous
 
-A new Flutter project.
+A Modern SNS Application for Sharing Musics with Friends. Made with :sparkling_heart: with Flutter
+
+## WIP
+
+Will be released in April 2019
 
 ## Getting Started
 
@@ -14,3 +18,13 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.io/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.
+
+## License
+
+[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)  
+
+Canorous is Free Software: You can use, study share and improve it at your
+will. Specifically you can redistribute and/or modify it under the terms of the
+[GNU General Public License](https://www.gnu.org/licenses/gpl.html) as
+published by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.  
