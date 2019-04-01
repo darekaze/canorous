@@ -5,8 +5,8 @@ class ScaffoldRoute extends StatefulWidget {
   _ScaffoldRouteState createState() => _ScaffoldRouteState();
 }
 
-class _ScaffoldRouteState extends State<ScaffoldRoute>
-  with SingleTickerProviderStateMixin {
+class _ScaffoldRouteState extends State<ScaffoldRoute> {
+  PageController _pageController;
   int _currentIndex = 0;
 
   List<Widget> _tabList = [
@@ -25,27 +25,29 @@ class _ScaffoldRouteState extends State<ScaffoldRoute>
     ),
   ];
 
-  TabController _tabController;
-
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      vsync: this,
-      length: _tabList.length,
-      initialIndex: 0,
+    _pageController = PageController(
+      keepPage: true,
+      initialPage: 0,
     );
-    _tabController.addListener(() {
-      if (_tabController.indexIsChanging)
-        print('Index is changed');
-        _onItemTapped(_tabController.index);
-    });
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _pageController.dispose();
     super.dispose();
+  }
+
+  void _onItemTapped(int page) {
+    _pageController.jumpToPage(page);
+  }
+
+  void _onPageChanged(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
@@ -54,45 +56,35 @@ class _ScaffoldRouteState extends State<ScaffoldRoute>
       appBar: AppBar(
         title: Text("App Name"),
       ),
-      body: TabBarView(
-        controller: _tabController,
+      body: PageView(
         children: _tabList,
+        onPageChanged: _onPageChanged,
+        controller: _pageController,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             title: Text('Home'),
-            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             title: Text('Search'),
-            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
             title: Text('Library'),
-            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.camera),
             title: Text('Moment'),
-            backgroundColor: Colors.blue,
           ),
         ],
         currentIndex: _currentIndex,
-        // fixedColor: Colors.blue,
+        fixedColor: Colors.blue,
         onTap: _onItemTapped,
       ),
     );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-
-    _tabController.animateTo(_currentIndex);
   }
 }
