@@ -7,23 +7,8 @@ class ScaffoldRoute extends StatefulWidget {
 
 class _ScaffoldRouteState extends State<ScaffoldRoute> {
   PageController _pageController;
+  List<Widget> _pageList;
   int _currentIndex = 0;
-
-  List<Widget> _tabList = [
-    // Temporaty component
-    Container(
-      color: Colors.teal,
-    ),
-    Container(
-      color: Colors.red,
-    ),
-    Container(
-      color: Colors.purple,
-    ),
-    Container(
-      color: Colors.amber,
-    ),
-  ];
 
   @override
   void initState() {
@@ -32,22 +17,27 @@ class _ScaffoldRouteState extends State<ScaffoldRoute> {
       keepPage: true,
       initialPage: 0,
     );
+    _pageList = [
+      // Place the actual screen here (should be loaded async)
+      Container(
+        color: Colors.teal,
+      ),
+      Container(
+        color: Colors.red,
+      ),
+      Container(
+        color: Colors.purple,
+      ),
+      Container(
+        color: Colors.amber,
+      ),
+    ];
   }
 
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }
-
-  void _onItemTapped(int page) {
-    _pageController.jumpToPage(page);
-  }
-
-  void _onPageChanged(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 
   @override
@@ -57,9 +47,13 @@ class _ScaffoldRouteState extends State<ScaffoldRoute> {
         title: Text("App Name"),
       ),
       body: PageView(
-        children: _tabList,
-        onPageChanged: _onPageChanged,
+        children: _pageList,
         controller: _pageController,
+        onPageChanged: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -83,7 +77,10 @@ class _ScaffoldRouteState extends State<ScaffoldRoute> {
         ],
         currentIndex: _currentIndex,
         fixedColor: Colors.blue,
-        onTap: _onItemTapped,
+        onTap: (int index) {
+          _currentIndex = index;
+          _pageController.jumpToPage(_currentIndex);
+        },
       ),
     );
   }
