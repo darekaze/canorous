@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import './bottom_navbar.dart';
+import 'package:canorous/scaffold_route.dart';
 
 void main() => runApp(MyApp());
 
