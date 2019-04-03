@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './home.dart';
 
 class Canorous extends StatefulWidget {
   @override
@@ -19,9 +20,7 @@ class _CanorousState extends State<Canorous> {
     );
     _pageList = [
       // Place the actual screen here (should be loaded async)
-      Container(
-        color: Colors.teal,
-      ),
+      HomePage(),
       Container(
         color: Colors.red,
       ),
