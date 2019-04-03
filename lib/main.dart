@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:canorous/scaffold_route.dart';
+import 'package:canorous/utils/themes.dart';
+import 'package:canorous/canorous.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,10 +9,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Canorous',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ScaffoldRoute(),
+      theme: darkTheme,
+      darkTheme: darkTheme,
+      debugShowCheckedModeBanner: false,
+      home: Canorous(),
     );
   }
 }

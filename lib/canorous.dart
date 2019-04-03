@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ScaffoldRoute extends StatefulWidget {
+class Canorous extends StatefulWidget {
   @override
-  _ScaffoldRouteState createState() => _ScaffoldRouteState();
+  _CanorousState createState() => _CanorousState();
 }
 
-class _ScaffoldRouteState extends State<ScaffoldRoute> {
+class _CanorousState extends State<Canorous> {
   PageController _pageController;
   List<Widget> _pageList;
   int _currentIndex = 0;
