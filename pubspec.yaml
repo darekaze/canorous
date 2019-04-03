@@ -1,7 +1,13 @@
 name: canorous
-description: A Free Moderen
+description: A Free Modern SNS Application for Sharing Awesome Music with Friends
+authors:
+  - DaRekaze <darekaze@gmail.com>
+homepage: https://github.com/darekaze/canorous
+maintainer:
+  - DaRwin (@darekaze)
+  - ZXYCharles (@ZXYCharles)
 
-version: 1.0.0+1
+version: 0.1.0+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
