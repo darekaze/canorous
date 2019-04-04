@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './home.dart';
+import 'package:canorous/app/views/home.dart';
 
 class Canorous extends StatefulWidget {
   @override

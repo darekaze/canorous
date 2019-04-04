@@ -1,18 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:canorous/utils/themes.dart';
-import 'package:canorous/canorous.dart';
+import 'package:canorous/environment/env.dart';
 
-void main() => runApp(MyApp());
+void main() => Production();
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Canorous',
-      theme: darkTheme,
-      darkTheme: darkTheme,
-      debugShowCheckedModeBanner: false,
-      home: Canorous(),
-    );
-  }
+class Production extends Env {
+  final String appName = "Canorous";
+
+  final String baseUrl = 'https://api.website.org';
+  EnvType environmentType = EnvType.PRODUCTION;
+
+  final String dbName = 'canorous.db';
 }
