@@ -15,6 +15,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   fluro: ^1.4.0
   dio: ^2.1.0
   flutter_bloc: ^0.9.0
@@ -32,10 +34,8 @@ dependencies:
   meta: ^1.1.0
   equatable: ^0.2.0
   json_annotation: ^2.0.0
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: 0.1.2
+  logging: ^0.11.3+2
+  flutter_stetho: ^0.2.2
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +53,7 @@ flutter:
   # https://flutter.io/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
   # https://flutter.io/assets-and-images/#from-packages
+  #
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
