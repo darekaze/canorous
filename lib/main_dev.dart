@@ -1,5 +1,5 @@
 
-import 'package:canorous/environment/env.dart';
+import 'package:canorous/config/env.dart';
 
 void main() => Development();
 

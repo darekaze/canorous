@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:canorous/app/views/home.dart';
+import 'package:canorous/app/views/home/home.dart';
 
 class Canorous extends StatefulWidget {
+  static const String PATH = '/';
+
+  Canorous({Key key}) : super(key: key);
+
   @override
   _CanorousState createState() => _CanorousState();
 }

@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:canorous/app/canorous.dart';
+import 'package:canorous/app/views/home/canorous.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

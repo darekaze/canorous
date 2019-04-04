@@ -1,12 +1,12 @@
-import 'package:canorous/app/canorous.dart';
-import 'package:canorous/utils/themes.dart';
+import 'package:canorous/app/AppComponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stetho/flutter_stetho.dart';
+import 'package:canorous/config/application.dart';
 
 enum EnvType {
   DEVELOPMENT,
   PRODUCTION,
-  TESTING
+  TESTING,
 }
 
 class Env {
@@ -22,22 +22,16 @@ class Env {
   Env() {
     value = this;
     _init();
-      }
+  }
 
   void _init() async {
     if (envType != EnvType.PRODUCTION) {
       Stetho.initialize();
     }
+    // Load application config
+    var app = Application();
+    await app.onCreate();
 
-    // TODO: Reorder this part
-    runApp(
-      MaterialApp(
-        title: 'Canorous',
-        theme: darkTheme,
-        darkTheme: darkTheme,
-        debugShowCheckedModeBanner: false,
-        home: Canorous(),
-      )
-    );
+    runApp(AppComponent(application: app));
   }
 }
