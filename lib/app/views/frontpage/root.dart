@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:canorous/app/views/home/home.dart';
+import 'package:canorous/app/views/frontpage/home.dart';
 
-class Canorous extends StatefulWidget {
+class Root extends StatefulWidget {
   static const String PATH = '/';
 
-  Canorous({Key key}) : super(key: key);
+  Root({Key key}) : super(key: key);
 
   @override
-  _CanorousState createState() => _CanorousState();
+  _RootState createState() => _RootState();
 }
 
-class _CanorousState extends State<Canorous> {
+class _RootState extends State<Root> {
   PageController _pageController;
   List<Widget> _pageList;
   int _currentIndex = 0;

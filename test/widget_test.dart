@@ -8,12 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:canorous/app/views/home/canorous.dart';
+import 'package:canorous/app/views/frontpage/root.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(Canorous());
+    await tester.pumpWidget(Root());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

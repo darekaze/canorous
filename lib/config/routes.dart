@@ -1,10 +1,10 @@
-import 'package:canorous/app/views/home/canorous.dart';
+import 'package:canorous/app/views/frontpage/root.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 
 var rootHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    return Canorous();
+    return Root();
   });
 
 // var appDetailRouteHandler = Handler(
@@ -24,7 +24,7 @@ class Routes {
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
         print('ERROR: Route not found!!');
       });
-    router.define(Canorous.PATH, handler: rootHandler);
+    router.define(Root.PATH, handler: rootHandler);
     // router.define(AppDetailPage.PATH, handler: appDetailRouteHandler);
   }
 }
