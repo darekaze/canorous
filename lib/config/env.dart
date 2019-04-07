@@ -32,6 +32,6 @@ class Env {
     var app = Application();
     await app.onCreate();
 
-    runApp(AppComponent(application: app));
+    runApp(AppComponent(app));
   }
 }

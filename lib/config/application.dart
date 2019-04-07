@@ -1,15 +1,14 @@
-import 'package:canorous/app/model/AppDatabaseMigrationListener.dart';
 import 'package:canorous/config/env.dart';
 import 'package:canorous/config/routes.dart';
-import 'package:canorous/utils/db/DatabaseHelper.dart';
+import 'package:canorous/db/AppDatabase.dart';
 import 'package:canorous/utils/log/Log.dart';
 import 'package:logging/logging.dart';
 import 'package:fluro/fluro.dart';
-
+import 'package:sembast/sembast.dart';
 
 class Application {
   Router router;
-  DatabaseHelper _db;
+  Database _db;
   // DBAppStoreRepository dbAppStoreRepository;
   // AppStoreAPIRepository appStoreAPIRepository;
 
@@ -21,17 +20,14 @@ class Application {
     // _initAPIRepository();
   }
 
-  Future<void> onTerminate() async {
-    await _db.close();
-  }
+  Future<void> onTerminate() async {}
 
   Future<void> _initDB() async {
-    AppDatabaseMigrationListener migrationListener = AppDatabaseMigrationListener();
-    DatabaseConfig databaseConfig = DatabaseConfig(Env.value.dbVersion, Env.value.dbName, migrationListener);
-    _db = DatabaseHelper(databaseConfig);
+    _db = await AppDatabase.instance.database;
     Log.info('DB name : ' + Env.value.dbName);
-    // await _db.deleteDB();
-    await _db.open();
+
+    // Reset the database (call once only)
+    // await AppDatabase.instance.deleteDB();
   }
 
   // void _initDBRepository(){
