@@ -41,5 +41,6 @@ class _AppComponentState extends State<AppComponent> {
   void dispose() async {
     Log.info('dispose');
     await widget._application.onTerminate();
+    super.dispose();
   }
 }
