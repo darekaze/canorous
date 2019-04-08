@@ -1,6 +1,6 @@
 import 'package:canorous/config/env.dart';
 import 'package:canorous/config/routes.dart';
-import 'package:canorous/db/AppDatabase.dart';
+import 'package:canorous/data/AppDatabase.dart';
 import 'package:canorous/utils/log/Log.dart';
 import 'package:logging/logging.dart';
 import 'package:fluro/fluro.dart';
