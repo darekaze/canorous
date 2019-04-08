@@ -13,10 +13,8 @@ class Env {
   static Env value;
 
   String appName;
-  String baseUrl;
   EnvType envType = EnvType.DEVELOPMENT;
-
-  int dbVersion = 1;
+  String baseUrl;
   String dbName;
 
   Env() {

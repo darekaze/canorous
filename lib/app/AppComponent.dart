@@ -1,4 +1,4 @@
-import 'package:canorous/app/AppProvider.dart';
+import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/config/application.dart';
 import 'package:canorous/config/env.dart';
 import 'package:canorous/utils/log/Log.dart';
