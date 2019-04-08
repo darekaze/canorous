@@ -2,6 +2,7 @@ import 'package:canorous/config/application.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 
+// ENHANCE: use provider library for cleaner code
 class AppProvider extends InheritedWidget {
 
   final Application application;
