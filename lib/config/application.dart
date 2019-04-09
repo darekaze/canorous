@@ -1,43 +1,39 @@
+import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/config/env.dart';
 import 'package:canorous/config/routes.dart';
 import 'package:canorous/data/AppDatabase.dart';
 import 'package:canorous/utils/log/Log.dart';
 import 'package:logging/logging.dart';
 import 'package:fluro/fluro.dart';
-import 'package:sembast/sembast.dart';
 
 class Application {
   Router router;
-  Database _db;
-  // DBAppStoreRepository dbAppStoreRepository;
-  // AppStoreAPIRepository appStoreAPIRepository;
+  AppAPI appAPI;
 
   Future<void> onCreate() async {
     _initLog();
     _initRouter();
     await _initDB();
-    // _initDBRepository();
-    // _initAPIRepository();
+    _initAppAPI();
   }
 
-  Future<void> onTerminate() async {}
+  void _initRouter(){
+    router = Router();
+    Routes.configureRoutes(router);
+  }
 
   Future<void> _initDB() async {
-    _db = await AppDatabase.instance.database;
+    // Making sure db is created at beginning
+    await AppDatabase.instance.database;
     Log.info('DB name : ' + Env.value.dbName);
 
     // Reset the database (call once only)
     // await AppDatabase.instance.deleteDB();
   }
 
-  // void _initDBRepository(){
-  //   dbAppStoreRepository = DBAppStoreRepository(_db.database);
-  // }
-
-  // void _initAPIRepository(){
-  //   APIProvider apiProvider = APIProvider();
-  //   appStoreAPIRepository = AppStoreAPIRepository(apiProvider, dbAppStoreRepository);
-  // }
+  void _initAppAPI() {
+    appAPI = AppAPI();
+  }
 
   void _initLog(){
     Log.init();
@@ -55,8 +51,5 @@ class Application {
     }
   }
 
-  void _initRouter(){
-    router = Router();
-    Routes.configureRoutes(router);
-  }
+  Future<void> onTerminate() async {}
 }
