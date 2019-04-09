@@ -20,6 +20,7 @@ dependencies:
   fluro: ^1.4.0
   dio: ^2.1.0
   sembast: ^1.15.1
+  rxdart: ^0.21.0
   flutter_bloc: ^0.9.1
   flutter_hooks: ^0.2.1
   youtube_extractor: ^1.0.2
