@@ -25,3 +25,10 @@ Map<String, dynamic> _$SearchResultItemToJson(SearchResultItem instance) =>
       'viewCount': instance.viewCount,
       'lengthSeconds': instance.lengthSeconds
     };
+
+SearchResultError _$SearchResultErrorFromJson(Map<String, dynamic> json) {
+  return SearchResultError(error: json['error'] as String);
+}
+
+Map<String, dynamic> _$SearchResultErrorToJson(SearchResultError instance) =>
+    <String, dynamic>{'error': instance.error};

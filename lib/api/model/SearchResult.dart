@@ -37,3 +37,12 @@ class SearchResultItem {
   factory SearchResultItem.fromJson(Map<String, dynamic> json) => _$SearchResultItemFromJson(json);
   Map<String, dynamic> toJson() => _$SearchResultItemToJson(this);
 }
+
+@JsonSerializable()
+class SearchResultError {
+  String error;
+
+  SearchResultError({this.error});
+
+  factory SearchResultError.fromJson(Map<String, dynamic> json) => _$SearchResultErrorFromJson(json);
+}

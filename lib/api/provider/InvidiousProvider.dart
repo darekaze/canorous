@@ -23,7 +23,9 @@ class InvidiousProvider extends APIProvider {
         'sort_by':'relevance'
       },
     );
-    throwIfNoSuccess(response);
-    return SearchResult.fromJson(jsonDecode(response.data));
+    final results = jsonDecode(response.data);
+    return (response.statusCode == 200)
+      ? SearchResult.fromJson(results)
+      : SearchResultError.fromJson(results);
   }
 }
