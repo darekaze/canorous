@@ -81,15 +81,20 @@ class _RootState extends State<Root>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_appBarTitle),
+    return SafeArea(
+      child: Scaffold(
+        // Maybe remove the appbar will be better
+        appBar: AppBar(
+          title: Text(_appBarTitle),
+        ),
+        body: _buildTabContent(),
+        bottomNavigationBar: SafeArea(
+          child: TabBar(
+            controller: _tabController,
+            tabs: myTabs,
+          ),
+        ),
       ),
-      body: _buildTabContent(),
-      bottomNavigationBar: TabBar(
-        controller: _tabController,
-        tabs: myTabs,
-      )
     );
   }
 }
