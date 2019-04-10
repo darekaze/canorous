@@ -1,20 +1,22 @@
 import 'package:canorous/config/env.dart';
 import 'package:canorous/utils/log/DioLogger.dart';
 import 'package:dio/dio.dart';
+import 'package:meta/meta.dart';
 
 class APIProvider {
   final String _tag;
   final String _baseUrl;
 
-  Dio _dio;
+  @protected
+  Dio dio;
 
   APIProvider(this._tag, this._baseUrl) {
     BaseOptions dioOptions = BaseOptions()..baseUrl = _baseUrl;
 
-    _dio = Dio(dioOptions);
+    dio = Dio(dioOptions);
 
     if (EnvType.DEVELOPMENT == Env.value.envType) {
-      _dio.interceptors.add(InterceptorsWrapper(
+      dio.interceptors.add(InterceptorsWrapper(
         onRequest: (RequestOptions options) async {
           DioLogger.onSend(_tag, options);
           return options;

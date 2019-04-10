@@ -1,4 +1,5 @@
 import 'package:canorous/app/views/frontpage/home.dart';
+import 'package:canorous/app/views/frontpage/search.dart';
 import 'package:flutter/material.dart';
 
 class Root extends StatefulWidget {
@@ -36,13 +37,6 @@ class _RootState extends State<Root>
         icon: item['icon'],
       ));
     });
-    _tabController.addListener(() {
-      print(_tabController.index);
-      // HACK: have delay in updating text
-      if (_tabController.index != _currentTab) {
-        _onTabChange();
-      }
-    });
   }
 
   @override
@@ -51,24 +45,13 @@ class _RootState extends State<Root>
     super.dispose();
   }
 
-  void _onTabChange() {
-    if (this.mounted) {
-      setState(() {
-        _appBarTitle = tabData[_tabController.index]['text'];
-        _currentTab = _tabController.index;
-      });
-    }
-  }
-
   Widget _buildTabContent() {
     return TabBarView(
       controller: _tabController,
       children: [
         // TODO: implement other pages
         HomePage(),
-        Container(
-          color: Colors.red,
-        ),
+        SearchScreen(),
         Container(
           color: Colors.purple,
         ),
@@ -83,10 +66,6 @@ class _RootState extends State<Root>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // Maybe remove the appbar will be better
-        appBar: AppBar(
-          title: Text(_appBarTitle),
-        ),
         body: _buildTabContent(),
         bottomNavigationBar: SafeArea(
           child: TabBar(
