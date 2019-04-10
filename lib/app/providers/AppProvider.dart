@@ -1,3 +1,4 @@
+import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/config/application.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
@@ -18,6 +19,10 @@ class AppProvider extends InheritedWidget {
 
   static Router getRouter(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application.router;
+  }
+
+  static AppAPI getAPI(BuildContext context) {
+    return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application.appAPI;
   }
 
   static Application getApplication(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/app/views/frontpage/home.dart';
 import 'package:canorous/app/views/frontpage/search.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,6 @@ class _RootState extends State<Root>
 
   TabController _tabController;
   List<Widget> myTabs = [];
-  String _appBarTitle = tabData[0]['text'];
-  int _currentTab = 0;
 
   @override
   void initState() {
@@ -51,7 +50,7 @@ class _RootState extends State<Root>
       children: [
         // TODO: implement other pages
         HomePage(),
-        SearchScreen(),
+        SearchScreen(appAPI: AppProvider.getAPI(context)),
         Container(
           color: Colors.purple,
         ),
