@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:canorous/api/model/SearchResult.dart';
-import 'package:dio/dio.dart';
 import 'package:canorous/api/provider/APIProvider.dart';
+import 'package:dio/dio.dart';
 
 class InvidiousProvider extends APIProvider {
   static const TAG = 'InvidiousProvider';
@@ -20,12 +20,11 @@ class InvidiousProvider extends APIProvider {
         'q': term,
         'type':'video',
         'duration':'short',
-        'sort_by':'relevance'
+        'sort_by':'relevance',
       },
     );
-    final results = jsonDecode(response.data);
     return (response.statusCode == 200)
-      ? SearchResult.fromJson(results)
-      : SearchResultError.fromJson(results);
+      ? SearchResult.fromJson(response.data)
+      : SearchResultError.fromJson(response.data);
   }
 }

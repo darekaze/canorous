@@ -39,7 +39,11 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: AppBar(
         title: _SearchBar(searchBloc: _searchBloc),
       ),
-      body: _SearchBody(searchBloc: _searchBloc),
+      body: Column(
+        children: <Widget>[
+          _SearchBody(searchBloc: _searchBloc),
+        ],
+      ),
     );
   }
 }
@@ -80,7 +84,7 @@ class _SearchBarState extends State<_SearchBar> {
           onTap: _onClearTapped,
         ),
         border: InputBorder.none,
-        hintText: 'Search musics',
+        hintText: 'Search music',
       ),
     );
   }
