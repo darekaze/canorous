@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:canorous/api/model/SearchResult.dart';
 import 'package:canorous/api/provider/APIProvider.dart';
 import 'package:dio/dio.dart';
