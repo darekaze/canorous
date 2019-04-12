@@ -15,6 +15,7 @@ class SearchResult {
   }
 }
 
+// TODO: Customize without auto-gen
 @JsonSerializable()
 class SearchResultItem {
   final String type;

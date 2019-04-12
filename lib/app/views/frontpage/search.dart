@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/SearchResult.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
@@ -38,6 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         title: _SearchBar(searchBloc: _searchBloc),
+        centerTitle: true,
       ),
       body: Column(
         children: <Widget>[
@@ -50,7 +52,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
 class _SearchBar extends StatefulWidget {
   final SearchBloc searchBloc;
-
   _SearchBar({Key key, this.searchBloc}) : super(key: key);
 
   @override
@@ -85,6 +86,7 @@ class _SearchBarState extends State<_SearchBar> {
         ),
         border: InputBorder.none,
         hintText: 'Search music',
+        contentPadding: EdgeInsets.only(top: 15.0),
       ),
     );
   }
@@ -97,21 +99,22 @@ class _SearchBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: refine this part
     return BlocBuilder(
       bloc: searchBloc,
       builder: (BuildContext context, SearchState state) {
         if (state is SearchStateEmpty) {
-          return Text('Please enter a term to begin');
+          return Center(child: Text('Enter a term to begin'));
         }
         if (state is SearchStateLoading) {
-          return CircularProgressIndicator(); // Can be change to cooler one
+          return Center(child: CircularProgressIndicator()); // Can be change to cooler one
         }
         if (state is SearchStateError) {
-          return Text(state.error);
+          return Center(child: Text(state.error));
         }
         if (state is SearchStateSuccess) {
           return state.items.isEmpty
-            ? Text('No Results')
+            ? Center(child: Text('No Results'))
             : Expanded(child: _SearchResults(items: state.items));
         }
       },
@@ -126,24 +129,117 @@ class _SearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: items.length,
-      itemBuilder: (BuildContext context, int index) {
-        return _SearchResultItem(item: items[index]);
+    return NotificationListener(
+      onNotification: (t) {
+        if (t is UserScrollNotification) {
+          FocusScope.of(context).requestFocus(FocusNode());
+        }
       },
+      child: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _SearchResultItem(item: items[index]);
+        },
+      ),
     );
   }
 }
 
-class _SearchResultItem extends StatelessWidget {
+class _SearchResultItem extends StatefulWidget {
   final SearchResultItem item;
 
   const _SearchResultItem({Key key, @required this.item}) : super(key: key);
 
   @override
+  State<_SearchResultItem> createState() => _SearchResultItemState();
+}
+
+class _SearchResultItemState extends State<_SearchResultItem>
+    with TickerProviderStateMixin {
+  AnimationController controller;
+  Animation animation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    animation = Tween(begin: 1.0, end: 0.5).animate(controller);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(item.title),
+    final image = CachedNetworkImageProvider('https://dugoutdiva.files.wordpress.com/2013/11/new-born-kola.jpg'); // TODO: add image url
+    image.resolve(ImageConfiguration()).addListener(
+      (imageInfo, syncCall) {
+        if (mounted) controller.forward();
+      }
+    );
+
+    return GestureDetector(
+      onTap: () {}, // TODO: play music
+      child: Card(
+        color: Colors.transparent,
+        child: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: image,
+              colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(animation.value),
+                BlendMode.hardLight,
+              ),
+            ),
+          ),
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(left: 16.0, right: 4.0),
+                alignment: Alignment.centerRight,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(widget.item.videoId),
+                    ),
+                    Row(children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.share),
+                        color: Colors.green,
+                        onPressed: () async {},
+                      ),
+                      // TODO: More buttons
+                    ],),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  widget.item.title,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(16.0),
+                alignment: Alignment.centerRight,
+                child: Text(widget.item.publishedText) // TODO: change to realtime based instead of text
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

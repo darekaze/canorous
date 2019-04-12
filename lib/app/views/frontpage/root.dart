@@ -64,8 +64,15 @@ class _RootState extends State<Root>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: _buildTabContent(),
+      body: NotificationListener(
+        onNotification: (t) {
+          if (t is UserScrollNotification) {
+            FocusScope.of(context).requestFocus(FocusNode());
+          }
+        },
+        child: SafeArea(
+          child: _buildTabContent(),
+        ),
       ),
       bottomNavigationBar: SafeArea(
         child: TabBar(
