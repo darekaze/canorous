@@ -1,3 +1,4 @@
+import 'package:canorous/app/components/player.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/app/views/frontpage/home.dart';
 import 'package:canorous/app/views/frontpage/search.dart';
@@ -51,8 +52,18 @@ class _RootState extends State<Root>
         // TODO: implement other pages
         HomePage(),
         SearchScreen(appAPI: AppProvider.getAPI(context)),
-        Container(
-          color: Colors.purple,
+        Center(
+          child: Column(
+            children: <Widget>[
+              Text(
+                'Sample 3',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              PlayerWidget(
+                url: 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1xtra_mf_p',
+              ),
+            ],
+          ),
         ),
         Container(
           color: Colors.amber,

@@ -9,6 +9,7 @@ import 'package:fluro/fluro.dart';
 class Application {
   Router router;
   AppAPI appAPI;
+  // TODO: init music player here (should be global)
 
   Future<void> onCreate() async {
     _initLog();
