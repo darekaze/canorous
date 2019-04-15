@@ -17,7 +17,8 @@ class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenState extends State<SearchScreen>
+    with AutomaticKeepAliveClientMixin<SearchScreen> {
   SearchBloc _searchBloc;
 
   @override
@@ -35,7 +36,11 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context); // keep alive when navigating
     return Scaffold(
       appBar: AppBar(
         title: _SearchBar(searchBloc: _searchBloc),
