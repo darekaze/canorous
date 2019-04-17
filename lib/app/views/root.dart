@@ -49,7 +49,7 @@ class _RootState extends State<Root> {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.library_music),
-          title: Text('Home'),
+          title: Text('Library'),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
@@ -57,7 +57,7 @@ class _RootState extends State<Root> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.music_video),
-          title: Text('Home'),
+          title: Text('Moment'),
         ),
       ],
       onTap: updateView,
@@ -124,6 +124,7 @@ class _RootState extends State<Root> {
     return Theme(
       data: ThemeData.dark(),
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: SafeArea(
           child: Stack(
             children: <Widget>[
