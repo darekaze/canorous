@@ -3,7 +3,7 @@ import 'package:canorous/config/application.dart';
 import 'package:canorous/config/env.dart';
 import 'package:canorous/utils/log/Log.dart';
 import 'package:canorous/utils/themes.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class AppComponent extends StatefulWidget {
@@ -20,7 +20,7 @@ class AppComponent extends StatefulWidget {
 class _AppComponentState extends State<AppComponent> {
   @override
   Widget build(BuildContext context) {
-    final app = MaterialApp(
+    final app = CupertinoApp(
         title: Env.value.appName,
         debugShowCheckedModeBanner: false,
         theme: darkTheme,

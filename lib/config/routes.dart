@@ -1,4 +1,4 @@
-import 'package:canorous/app/views/frontpage/root.dart';
+import 'package:canorous/app/views/root.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 

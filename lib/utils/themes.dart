@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 enum currentTheme { dark }
 
-final darkTheme = ThemeData(
+final darkTheme = CupertinoThemeData(
   brightness: Brightness.dark,
-  buttonColor: Colors.white,
-  unselectedWidgetColor: Colors.white,
-  primaryTextTheme: TextTheme(
-    caption: TextStyle(color: Colors.white),
-  ),
+  scaffoldBackgroundColor: CupertinoColors.darkBackgroundGray,
+  barBackgroundColor: CupertinoColors.darkBackgroundGray,
 );
