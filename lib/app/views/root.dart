@@ -5,6 +5,7 @@ import 'package:canorous/app/views/frontpage/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
 class Root extends StatefulWidget {
   static const String PATH = '/';
   const Root({Key key}) : super(key: key);
@@ -23,18 +24,8 @@ class _RootState extends State<Root> {
         // TODO: implement other pages
         HomePage(),
         SearchScreen(appAPI: AppProvider.getAPI(context)),
-        Center(
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Sample 3',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              PlayerWidget(
-                url: 'http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1xtra_mf_p',
-              ),
-            ],
-          ),
+        Container(
+          color: Colors.purple,
         ),
       ],
     );
@@ -57,7 +48,7 @@ class _RootState extends State<Root> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.music_video),
-          title: Text('Home'),
+          title: Text('Moment'),
         ),
       ],
       onTap: updateView,
@@ -67,7 +58,7 @@ class _RootState extends State<Root> {
   void updateView(int index) {
     setState(() { _currentIndex = index; });
   }
-
+/*
   // TODO: separate as individual component
   Widget _buildMusicBar(BuildContext context) {
     return GestureDetector(
@@ -118,6 +109,7 @@ class _RootState extends State<Root> {
       ),
     );
   }
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +124,7 @@ class _RootState extends State<Root> {
                 bottom: 0.0,
                 left: 0.0,
                 right: 0.0,
-                child: _buildMusicBar(context),
+                child: PlayerWidget(url: "http://www2.comp.polyu.edu.hk/~16097874d/test.mp3")
               ),
             ],
           ),
