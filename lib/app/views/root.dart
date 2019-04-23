@@ -130,6 +130,7 @@ class _RootState extends State<Root> {
     return Theme(
       data: ThemeData.light(),
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: SafeArea(
           child: Stack(
             children: <Widget>[
