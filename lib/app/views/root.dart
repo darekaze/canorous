@@ -34,21 +34,35 @@ class _RootState extends State<Root> {
   Widget _buildTabBar() {
     return CupertinoTabBar(
       currentIndex: _currentIndex,
-      backgroundColor: CupertinoColors.extraLightBackgroundGray,
-      activeColor: Colors.red[300],
+      activeColor: Colors.red[500],
       iconSize: 24.0,
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.library_music),
-          title: Text('Home'),
+          title: Text(
+            'Home',
+            style: new TextStyle(
+                        fontSize: 12,
+            ),
+          ),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
-          title: Text('Search'),
+          title: Text(
+            'Search',
+            style: new TextStyle(
+                        fontSize: 12,
+            ),
+          ),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.music_video),
-          title: Text('Moment'),
+          title: Text(
+            'Moment',
+            style: new TextStyle(
+                        fontSize: 12,
+            ),
+          ),
         ),
       ],
       onTap: updateView,
