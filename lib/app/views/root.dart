@@ -34,8 +34,8 @@ class _RootState extends State<Root> {
   Widget _buildTabBar() {
     return CupertinoTabBar(
       currentIndex: _currentIndex,
-      backgroundColor: CupertinoColors.darkBackgroundGray,
-      activeColor: Colors.cyan[200],
+      backgroundColor: CupertinoColors.extraLightBackgroundGray,
+      activeColor: Colors.red[300],
       iconSize: 24.0,
       items: [
         BottomNavigationBarItem(
@@ -114,7 +114,7 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData.dark(),
+      data: ThemeData.light(),
       child: Scaffold(
         body: SafeArea(
           child: Stack(

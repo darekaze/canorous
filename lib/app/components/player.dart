@@ -69,7 +69,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
           right: 5
         ),
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.93),
+          color: Colors.grey[400].withOpacity(0.93),
           border: Border(
             bottom: BorderSide(color: Colors.grey.shade900, width: 1.0),
           ),
@@ -113,13 +113,13 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                 onPressed: () => playorpause(),
                 iconSize: 40.0,
                 icon: iconPlayorPause,
-                color: Colors.cyan
+                color: Colors.black
               ),
               new IconButton(
                   onPressed: () => playNext(),
                   iconSize: 40.0,
                   icon: new Icon(Icons.skip_next),
-                  color: Colors.cyan
+                  color: Colors.black
               ),
             ],
           ),
