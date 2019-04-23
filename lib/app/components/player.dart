@@ -93,7 +93,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                             _position.inMilliseconds < _duration.inMilliseconds)
                         ? _position.inMilliseconds / _duration.inMilliseconds
                         : 0.0,
-                    valueColor: AlwaysStoppedAnimation(Colors.cyan),
+                    valueColor: AlwaysStoppedAnimation(Colors.red[300]),
                   ),
                 ],
               ),
