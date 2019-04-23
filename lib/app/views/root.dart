@@ -16,7 +16,7 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   int _currentIndex = 0;
-
+  
   Widget _buildTabContent() {
     return IndexedStack(
       index: _currentIndex,
@@ -38,7 +38,7 @@ class _RootState extends State<Root> {
       iconSize: 24.0,
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.library_music),
+          icon: Icon(Icons.home),
           title: Text(
             'Home',
             style: new TextStyle(
@@ -56,7 +56,7 @@ class _RootState extends State<Root> {
           ),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.music_video),
+          icon: Icon(Icons.camera),
           title: Text(
             'Moment',
             style: new TextStyle(
