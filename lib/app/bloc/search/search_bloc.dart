@@ -12,9 +12,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc({@required this.appAPI}); // Maybe use application
 
   @override
-  Stream<SearchEvent> transform(Stream<SearchEvent> events) {
-    return (events as Observable<SearchEvent>)
-        .debounce(Duration(milliseconds: 800));
+  Stream<SearchState> transform(events, next) {
+    return super.transform(
+      (events as Observable<SearchEvent>).debounce(Duration(milliseconds: 800)),
+      next,
+    );
   }
 
   @override
