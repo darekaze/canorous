@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 enum PlayerState { stopped, playing, paused }
 
+// TODO: Separate Player logic to another file (bloc) and make global (singleton)
 class PlayerWidget extends StatefulWidget {
   final String url;
   final bool isLocal;
@@ -28,6 +29,9 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   Duration _duration;
   Duration _position;
 
+  Icon iconPlayorPause = Icon(Icons.play_arrow);
+  Text musicName = Text("Music Name");
+
   PlayerState _playerState = PlayerState.stopped;
   StreamSubscription _durationSubscription;
   StreamSubscription _positionSubscription;
@@ -37,8 +41,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   get _isPlaying => _playerState == PlayerState.playing;
   get _isPaused => _playerState == PlayerState.paused;
-  get _durationText => _duration?.toString()?.split('.')?.first ?? '';
-  get _positionText => _position?.toString()?.split('.')?.first ?? '';
 
   @override
   void initState() {
@@ -59,66 +61,58 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              onPressed: _isPlaying ? null : () => _play(),
-              iconSize: 64.0,
-              icon: Icon(Icons.play_arrow),
-              color: Colors.cyan,
+    return Container(
+        padding: EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 5),
+        decoration: BoxDecoration(
+          color: Colors.grey[400].withOpacity(0.93),
+          border: Border(
+              top: BorderSide(color: Colors.grey[500], width: 0.5),
+              bottom: BorderSide(color: Colors.grey[500], width: 0.5)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Stack(
+                  children: [
+                    CircularProgressIndicator(
+                      value: 1.0,
+                      valueColor: AlwaysStoppedAnimation(Colors.grey[300]),
+                    ),
+                    CircularProgressIndicator(
+                      value: (_position != null &&
+                              _duration != null &&
+                              _position.inMilliseconds > 0 &&
+                              _position.inMilliseconds <
+                                  _duration.inMilliseconds)
+                          ? _position.inMilliseconds / _duration.inMilliseconds
+                          : 0.0,
+                      valueColor: AlwaysStoppedAnimation(Colors.red[300]),
+                    ),
+                  ],
+                ),
+                Container(padding: EdgeInsets.only(left: 15), child: musicName),
+              ],
             ),
-            IconButton(
-              onPressed: _isPlaying ? () => _pause() : null,
-              iconSize: 64.0,
-              icon: Icon(Icons.pause),
-              color: Colors.cyan,
-            ),
-            IconButton(
-              onPressed: _isPlaying || _isPaused ? () => _stop() : null,
-              iconSize: 64.0,
-              icon: Icon(Icons.stop),
-              color: Colors.cyan,
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                    onPressed: () => playorpause(),
+                    iconSize: 40.0,
+                    icon: iconPlayorPause,
+                    color: Colors.black),
+                IconButton(
+                    onPressed: () => playNext(),
+                    iconSize: 40.0,
+                    icon: Icon(Icons.skip_next),
+                    color: Colors.black),
+              ],
             ),
           ],
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Stack(
-                children: [
-                  CircularProgressIndicator(
-                    value: 1.0,
-                    valueColor: AlwaysStoppedAnimation(Colors.grey[300]),
-                  ),
-                  CircularProgressIndicator(
-                    value: (_position != null &&
-                            _duration != null &&
-                            _position.inMilliseconds > 0 &&
-                            _position.inMilliseconds < _duration.inMilliseconds)
-                        ? _position.inMilliseconds / _duration.inMilliseconds
-                        : 0.0,
-                    valueColor: AlwaysStoppedAnimation(Colors.cyan),
-                  ),
-                ],
-              ),
-            ),
-            Text(
-              _position != null
-                  ? '${_positionText ?? ''} / ${_durationText ?? ''}'
-                  : _duration != null ? _durationText : '',
-              style: TextStyle(fontSize: 24.0),
-            ),
-          ],
-        ),
-        Text("State: $_audioPlayerState")
-      ],
-    );
+        ));
   }
 
   void _initAudioPlayer() {
@@ -159,34 +153,46 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     });
   }
 
-  Future<int> _play() async {
-    final playPosition = (_position != null &&
-            _duration != null &&
-            _position.inMilliseconds > 0 &&
-            _position.inMilliseconds < _duration.inMilliseconds)
-        ? _position
-        : null;
-    final result = await _audioPlayer.play(widget.url,
-        isLocal: widget.isLocal, position: playPosition);
-    if (result == 1) setState(() => _playerState = PlayerState.playing);
-    return result;
-  }
-
-  Future<int> _pause() async {
-    final result = await _audioPlayer.pause();
-    if (result == 1) setState(() => _playerState = PlayerState.paused);
-    return result;
-  }
-
-  Future<int> _stop() async {
-    final result = await _audioPlayer.stop();
-    if (result == 1) {
+  Future playorpause() async {
+    if (!_isPlaying || _isPaused) {
+      final playPosition = (_position != null &&
+              _duration != null &&
+              _position.inMilliseconds > 0 &&
+              _position.inMilliseconds < _duration.inMilliseconds)
+          ? _position
+          : null;
+      await _audioPlayer.play(widget.url,
+          isLocal: widget.isLocal, position: playPosition);
       setState(() {
-        _playerState = PlayerState.stopped;
-        _position = new Duration();
+        _playerState = PlayerState.playing;
+        iconPlayorPause = new Icon(Icons.pause);
+      });
+    } else {
+      await _audioPlayer.pause();
+      setState(() {
+        _playerState = PlayerState.paused;
+        iconPlayorPause = Icon(Icons.play_arrow);
       });
     }
-    return result;
+  }
+
+  Future playNext() async {
+    stop();
+    await _audioPlayer.play(widget.url,
+        isLocal: widget.isLocal, position: null);
+    setState(() {
+      musicName = Text("Second music");
+      _playerState = PlayerState.playing;
+      iconPlayorPause = Icon(Icons.pause);
+    });
+  }
+
+  Future stop() async {
+    await _audioPlayer.stop();
+    setState(() {
+      _playerState = PlayerState.stopped;
+      _position = Duration();
+    });
   }
 
   void _onComplete() {

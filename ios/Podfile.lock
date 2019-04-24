@@ -1,0 +1,73 @@
+PODS:
+  - audioplayers (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - flutter_local_notifications (0.0.1):
+    - Flutter
+  - flutter_stetho (0.0.1):
+    - Flutter
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - path_provider (0.0.1):
+    - Flutter
+  - permission_handler (3.0.0):
+    - Flutter
+  - share (0.5.2):
+    - Flutter
+  - shared_preferences (0.0.1):
+    - Flutter
+  - sqflite (0.0.1):
+    - Flutter
+    - FMDB (~> 2.7.2)
+
+DEPENDENCIES:
+  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
+  - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_stetho (from `.symlinks/plugins/flutter_stetho/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - share (from `.symlinks/plugins/share/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FMDB
+
+EXTERNAL SOURCES:
+  audioplayers:
+    :path: ".symlinks/plugins/audioplayers/ios"
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_stetho:
+    :path: ".symlinks/plugins/flutter_stetho/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+  share:
+    :path: ".symlinks/plugins/share/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
+
+SPEC CHECKSUMS:
+  audioplayers: def111f6a23e00d9d103563b07de5e44a727bd3c
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  flutter_local_notifications: 696a74904e0a0ab754e27a5f761da4a7f9153710
+  flutter_stetho: 21464137ea9bb03914912de8916a7acfdcbfc0a5
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
+  permission_handler: 03dcf3ade9d5f398b8854b366cb9de718d3daa76
+  share: 222b5dcc8031238af9d7de91149df65bad1aef75
+  shared_preferences: 5a1d487c427ee18fcd3ea1f2a131569481834b53
+  sqflite: d1612813fa7db7c667bed9f1d1b508deffc56999
+
+PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
+
+COCOAPODS: 1.5.3

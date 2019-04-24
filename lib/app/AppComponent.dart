@@ -23,7 +23,7 @@ class _AppComponentState extends State<AppComponent> {
     final app = CupertinoApp(
         title: Env.value.appName,
         debugShowCheckedModeBanner: false,
-        theme: darkTheme,
+        theme: cupertinoLightTheme,
         onGenerateRoute: widget._application.router.generator,
         localizationsDelegates: [
           // S.delegate,
