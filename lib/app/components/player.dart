@@ -4,9 +4,9 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-
 enum PlayerState { stopped, playing, paused }
 
+// TODO: Separate Player logic to another file (bloc) and make global (singleton)
 class PlayerWidget extends StatefulWidget {
   final String url;
   final bool isLocal;
@@ -29,8 +29,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   Duration _duration;
   Duration _position;
 
-  Icon iconPlayorPause = new Icon(Icons.play_arrow);
-  Text musicName = new Text("Music Name");
+  Icon iconPlayorPause = Icon(Icons.play_arrow);
+  Text musicName = Text("Music Name");
 
   PlayerState _playerState = PlayerState.stopped;
   StreamSubscription _durationSubscription;
@@ -62,71 +62,57 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-          top: 5,
-          bottom: 5,
-          left: 20,
-          right: 5
-      ),
-      decoration: BoxDecoration(
-        color: Colors.grey[400].withOpacity(0.93),
-        border: Border(
-          top: BorderSide(color: Colors.grey[500], width: 0.5),
-          bottom: BorderSide(color: Colors.grey[500], width: 0.5)
+        padding: EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 5),
+        decoration: BoxDecoration(
+          color: Colors.grey[400].withOpacity(0.93),
+          border: Border(
+              top: BorderSide(color: Colors.grey[500], width: 0.5),
+              bottom: BorderSide(color: Colors.grey[500], width: 0.5)),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Stack(
-                children: [
-                  CircularProgressIndicator(
-                    value: 1.0,
-                    valueColor: AlwaysStoppedAnimation(Colors.grey[300]),
-                  ),
-                  CircularProgressIndicator(
-                    value: (_position != null &&
-                            _duration != null &&
-                            _position.inMilliseconds > 0 &&
-                            _position.inMilliseconds < _duration.inMilliseconds)
-                        ? _position.inMilliseconds / _duration.inMilliseconds
-                        : 0.0,
-                    valueColor: AlwaysStoppedAnimation(Colors.red[300]),
-                  ),
-                ],
-              ),
-
-              Container(
-                padding: EdgeInsets.only(
-                  left: 15
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Stack(
+                  children: [
+                    CircularProgressIndicator(
+                      value: 1.0,
+                      valueColor: AlwaysStoppedAnimation(Colors.grey[300]),
+                    ),
+                    CircularProgressIndicator(
+                      value: (_position != null &&
+                              _duration != null &&
+                              _position.inMilliseconds > 0 &&
+                              _position.inMilliseconds <
+                                  _duration.inMilliseconds)
+                          ? _position.inMilliseconds / _duration.inMilliseconds
+                          : 0.0,
+                      valueColor: AlwaysStoppedAnimation(Colors.red[300]),
+                    ),
+                  ],
                 ),
-                child: musicName
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              new IconButton(
-                onPressed: () => playorpause(),
-                iconSize: 40.0,
-                icon: iconPlayorPause,
-                color: Colors.black
-              ),
-              new IconButton(
-                  onPressed: () => playNext(),
-                  iconSize: 40.0,
-                  icon: new Icon(Icons.skip_next),
-                  color: Colors.black
-              ),
-            ],
-          ),
-        ],
-      )
-    );
+                Container(padding: EdgeInsets.only(left: 15), child: musicName),
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                    onPressed: () => playorpause(),
+                    iconSize: 40.0,
+                    icon: iconPlayorPause,
+                    color: Colors.black),
+                IconButton(
+                    onPressed: () => playNext(),
+                    iconSize: 40.0,
+                    icon: Icon(Icons.skip_next),
+                    color: Colors.black),
+              ],
+            ),
+          ],
+        ));
   }
 
   void _initAudioPlayer() {
@@ -168,35 +154,36 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   }
 
   Future playorpause() async {
-    if(!_isPlaying || _isPaused) {
+    if (!_isPlaying || _isPaused) {
       final playPosition = (_position != null &&
-            _duration != null &&
-            _position.inMilliseconds > 0 &&
-            _position.inMilliseconds < _duration.inMilliseconds)
-        ? _position
-        : null;
-      await _audioPlayer.play(widget.url, isLocal: widget.isLocal, position: playPosition);
+              _duration != null &&
+              _position.inMilliseconds > 0 &&
+              _position.inMilliseconds < _duration.inMilliseconds)
+          ? _position
+          : null;
+      await _audioPlayer.play(widget.url,
+          isLocal: widget.isLocal, position: playPosition);
       setState(() {
         _playerState = PlayerState.playing;
         iconPlayorPause = new Icon(Icons.pause);
       });
-    }
-    else {
+    } else {
       await _audioPlayer.pause();
       setState(() {
         _playerState = PlayerState.paused;
-        iconPlayorPause = new Icon(Icons.play_arrow);
+        iconPlayorPause = Icon(Icons.play_arrow);
       });
     }
   }
 
   Future playNext() async {
     stop();
-    await _audioPlayer.play(widget.url, isLocal: widget.isLocal, position: null);
+    await _audioPlayer.play(widget.url,
+        isLocal: widget.isLocal, position: null);
     setState(() {
-      musicName = new Text("Second music");
+      musicName = Text("Second music");
       _playerState = PlayerState.playing;
-      iconPlayorPause = new Icon(Icons.pause);
+      iconPlayorPause = Icon(Icons.pause);
     });
   }
 
@@ -204,7 +191,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     await _audioPlayer.stop();
     setState(() {
       _playerState = PlayerState.stopped;
-      _position = new Duration();
+      _position = Duration();
     });
   }
 

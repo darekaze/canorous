@@ -2,9 +2,9 @@ import 'package:canorous/app/components/player.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/app/views/frontpage/home.dart';
 import 'package:canorous/app/views/frontpage/search.dart';
+import 'package:canorous/utils/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 
 class Root extends StatefulWidget {
   static const String PATH = '/';
@@ -16,7 +16,7 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   int _currentIndex = 0;
-  
+
   Widget _buildTabContent() {
     return IndexedStack(
       index: _currentIndex,
@@ -39,30 +39,15 @@ class _RootState extends State<Root> {
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          title: Text(
-            'Home',
-            style: new TextStyle(
-                        fontSize: 12,
-            ),
-          ),
+          title: Text('Home', style: TextStyle(fontSize: 12)),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
-          title: Text(
-            'Search',
-            style: new TextStyle(
-                        fontSize: 12,
-            ),
-          ),
+          title: Text('Search', style: TextStyle(fontSize: 12)),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.camera),
-          title: Text(
-            'Moment',
-            style: new TextStyle(
-                        fontSize: 12,
-            ),
-          ),
+          title: Text('Moment', style: TextStyle(fontSize: 12)),
         ),
       ],
       onTap: updateView,
@@ -70,77 +55,29 @@ class _RootState extends State<Root> {
   }
 
   void updateView(int index) {
-    setState(() { _currentIndex = index; });
+    setState(() {
+      _currentIndex = index;
+    });
   }
-/*
-  // TODO: separate as individual component
-  Widget _buildMusicBar(BuildContext context) {
-    return GestureDetector(
-      onTap: (){}, // TODO: direct to player page
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.93),
-          border: Border(
-            bottom: BorderSide(color: Colors.grey.shade900, width: 1.0),
-          ),
-        ),
-        child: Row(
-          children: <Widget>[
-            Container(), // TODO: add Thumbnail widget
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text(
-                  'Now playing title',
-                  style: Theme.of(context).textTheme.subhead.copyWith(
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ),
-            Container(
-              width: 40.0,
-              child: IconButton(
-                icon: Icon(Icons.pause),
-                onPressed: (){}, // TODO: play and pause function
-                iconSize: 35.0,
-              ),
-            ),
-            Container(
-              width: 40.0,
-              child: IconButton(
-                icon: Icon(Icons.skip_next),
-                onPressed: (){}, // TODO: next function
-                iconSize: 35.0,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-*/
 
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData.light(),
+      data: materialLightTheme,
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: SafeArea(
           child: Stack(
             children: <Widget>[
               Positioned.fill(child: _buildTabContent()),
+              // TODO: require further change
               Positioned(
-                bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: PlayerWidget(url: "http://www2.comp.polyu.edu.hk/~16097874d/test.mp3")
-              ),
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: PlayerWidget(
+                      url:
+                          "http://www2.comp.polyu.edu.hk/~16097874d/test.mp3")),
             ],
           ),
         ),
