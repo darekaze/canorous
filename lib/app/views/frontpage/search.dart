@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/SearchResult.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,8 +18,7 @@ class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen>
-    with AutomaticKeepAliveClientMixin<SearchScreen> {
+class _SearchScreenState extends State<SearchScreen> {
   SearchBloc _searchBloc;
 
   @override
@@ -36,11 +36,7 @@ class _SearchScreenState extends State<SearchScreen>
   }
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context); // keep alive when navigating
     return Scaffold(
       appBar: AppBar(
         title: _SearchBar(searchBloc: _searchBloc),
@@ -112,15 +108,17 @@ class _SearchBody extends StatelessWidget {
           return Center(child: Text('Enter a term to begin'));
         }
         if (state is SearchStateLoading) {
-          return Center(child: CircularProgressIndicator()); // Can be change to cooler one
+          return Center(
+              child:
+                  CircularProgressIndicator()); // Can be change to cooler one
         }
         if (state is SearchStateError) {
           return Center(child: Text(state.error));
         }
         if (state is SearchStateSuccess) {
           return state.items.isEmpty
-            ? Center(child: Text('No Results'))
-            : Expanded(child: _SearchResults(items: state.items));
+              ? Center(child: Text('No Results'))
+              : Expanded(child: _SearchResults(items: state.items));
         }
       },
     );
@@ -182,69 +180,81 @@ class _SearchResultItemState extends State<_SearchResultItem>
 
   @override
   Widget build(BuildContext context) {
-    final image = CachedNetworkImageProvider('https://dugoutdiva.files.wordpress.com/2013/11/new-born-kola.jpg'); // TODO: add image url
-    image.resolve(ImageConfiguration()).addListener(
-      (imageInfo, syncCall) {
-        if (mounted) controller.forward();
-      }
-    );
-
-    return GestureDetector(
-      onTap: () {}, // TODO: play music
-      child: Card(
-        color: Colors.transparent,
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: image,
-              colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(animation.value),
-                BlendMode.hardLight,
-              ),
-            ),
-          ),
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(left: 16.0, right: 4.0),
-                alignment: Alignment.centerRight,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(widget.item.videoId),
+    final image = CachedNetworkImageProvider(
+        'https://i.ytimg.com/vi/${widget.item.videoId}/mqdefault.jpg' ??
+            'nothing');
+    image.resolve(ImageConfiguration()).addListener((imageInfo, syncCall) {
+      if (mounted) controller.forward();
+    });
+    return AnimatedBuilder(
+        animation: animation,
+        builder: (context, _) {
+          return GestureDetector(
+            onTap: () {}, // TODO: play music
+            child: Card(
+              color: Colors.transparent,
+              child: Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: image,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(animation.value),
+                      BlendMode.hardLight,
                     ),
-                    Row(children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.share),
-                        color: Colors.green,
-                        onPressed: () async {},
+                  ),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.only(left: 16.0, right: 4.0),
+                      alignment: Alignment.centerRight,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              widget.item.videoId,
+                              style: TextStyle(color: CupertinoColors.white),
+                            ),
+                          ),
+                          Row(
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.share),
+                                color: Colors.green,
+                                onPressed: () async {},
+                              ),
+                              // TODO: More buttons
+                            ],
+                          ),
+                        ],
                       ),
-                      // TODO: More buttons
-                    ],),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.item.title,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: CupertinoColors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(16.0),
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        widget.item.publishedText,
+                        style: TextStyle(color: CupertinoColors.white),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.item.title,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(16.0),
-                alignment: Alignment.centerRight,
-                child: Text(widget.item.publishedText) // TODO: change to realtime based instead of text
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }

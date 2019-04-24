@@ -13,7 +13,11 @@ SearchResultItem _$SearchResultItemFromJson(Map<String, dynamic> json) {
       videoId: json['videoId'] as String,
       publishedText: json['publishedText'] as String,
       viewCount: json['viewCount'] as int,
-      lengthSeconds: json['lengthSeconds'] as int);
+      published: json['published'] as int,
+      lengthSeconds: json['lengthSeconds'] as int,
+      liveNow: json['liveNow'] as bool,
+      paid: json['paid'] as bool,
+      premium: json['premium'] as bool);
 }
 
 Map<String, dynamic> _$SearchResultItemToJson(SearchResultItem instance) =>
@@ -23,7 +27,11 @@ Map<String, dynamic> _$SearchResultItemToJson(SearchResultItem instance) =>
       'videoId': instance.videoId,
       'publishedText': instance.publishedText,
       'viewCount': instance.viewCount,
-      'lengthSeconds': instance.lengthSeconds
+      'published': instance.published,
+      'lengthSeconds': instance.lengthSeconds,
+      'liveNow': instance.liveNow,
+      'paid': instance.paid,
+      'premium': instance.premium
     };
 
 SearchResultError _$SearchResultErrorFromJson(Map<String, dynamic> json) {
