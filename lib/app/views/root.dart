@@ -60,27 +60,25 @@ class _RootState extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: materialLightTheme,
-      child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: SafeArea(
-          child: Stack(
-            children: <Widget>[
-              Positioned.fill(child: _buildTabContent()),
-              // TODO: require further change
-              Positioned(
-                  bottom: 0.0,
-                  left: 0.0,
-                  right: 0.0,
-                  child: AppProvider.getPlayer(context),
-              )
-            ],
-          ),
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            Positioned.fill(child: _buildTabContent()),
+            // TODO: require further change
+            Positioned(
+                bottom: 0.0,
+                left: 0.0,
+                right: 0.0,
+                child: AppProvider.getPlayer(context), // Should not be like this
+            )
+          ],
         ),
-        bottomNavigationBar: SafeArea(
-          child: _buildTabBar(),
       ),
+      bottomNavigationBar: SafeArea(
+        child: _buildTabBar(),
+    ),
     );
   }
 }

@@ -40,7 +40,7 @@ class Application {
   }
 
   void _initPlayer() {
-    player = PlayerWidget();
+    player = PlayerWidget(); // TODO: change to init real player
   }
 
   void _initLog(){

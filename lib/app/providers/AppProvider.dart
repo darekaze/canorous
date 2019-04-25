@@ -26,11 +26,12 @@ class AppProvider extends InheritedWidget {
     return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application.appAPI;
   }
 
+  static PlayerWidget getPlayer(BuildContext context) {
+    return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application.player;
+  }
+
   static Application getApplication(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application;
   }
 
-  static PlayerWidget getPlayer(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application.player;
-  }
 }
