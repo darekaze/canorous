@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/SearchResult.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// TODO: finalize UI
 class SearchScreen extends StatefulWidget {
   final AppAPI appAPI;
 
@@ -47,6 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
           _SearchBody(searchBloc: _searchBloc),
         ],
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 }
@@ -100,7 +101,6 @@ class _SearchBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: refine this part
     return BlocBuilder(
       bloc: searchBloc,
       builder: (BuildContext context, SearchState state) {
@@ -215,7 +215,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
                           Expanded(
                             child: Text(
                               widget.item.videoId,
-                              style: TextStyle(color: CupertinoColors.white),
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
                           Row(
@@ -238,7 +238,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
                         widget.item.title,
                         style: TextStyle(
                           fontSize: 20.0,
-                          color: CupertinoColors.white,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -247,7 +247,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
                       alignment: Alignment.centerRight,
                       child: Text(
                         widget.item.publishedText,
-                        style: TextStyle(color: CupertinoColors.white),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],

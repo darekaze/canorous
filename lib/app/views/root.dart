@@ -1,8 +1,8 @@
 import 'package:canorous/app/components/player.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/app/views/frontpage/home.dart';
+import 'package:canorous/app/views/frontpage/moment.dart';
 import 'package:canorous/app/views/frontpage/search.dart';
-import 'package:canorous/utils/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,12 +21,9 @@ class _RootState extends State<Root> {
     return IndexedStack(
       index: _currentIndex,
       children: [
-        // TODO: implement other pages
-        HomePage(),
+        HomeScreen(),
         SearchScreen(appAPI: AppProvider.getAPI(context)),
-        Container(
-          color: Colors.purple,
-        ),
+        MomentScreen(),
       ],
     );
   }
@@ -35,19 +32,20 @@ class _RootState extends State<Root> {
     return CupertinoTabBar(
       currentIndex: _currentIndex,
       activeColor: Colors.red[500],
+      backgroundColor: Colors.white,
       iconSize: 24.0,
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          title: Text('Home', style: TextStyle(fontSize: 12)),
+          title: Text('Home', style: TextStyle(fontSize: 11)),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
-          title: Text('Search', style: TextStyle(fontSize: 12)),
+          title: Text('Search', style: TextStyle(fontSize: 11)),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.camera),
-          title: Text('Moment', style: TextStyle(fontSize: 12)),
+          title: Text('Moment', style: TextStyle(fontSize: 11)),
         ),
       ],
       onTap: updateView,
@@ -82,7 +80,6 @@ class _RootState extends State<Root> {
         ),
         bottomNavigationBar: SafeArea(
           child: _buildTabBar(),
-        ),
       ),
     );
   }
