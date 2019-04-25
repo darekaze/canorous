@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// TODO: Change to stateless?
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
