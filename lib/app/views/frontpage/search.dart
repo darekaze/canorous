@@ -37,8 +37,11 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // ENHANCE: Change into stack and make searchbar float
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: _SearchBar(searchBloc: _searchBloc),
         centerTitle: true,
       ),
@@ -178,6 +181,17 @@ class _SearchResultItemState extends State<_SearchResultItem>
     super.dispose();
   }
 
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) {
+      if (n >= 10) return "$n";
+      return "0$n";
+    }
+
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
   @override
   Widget build(BuildContext context) {
     final image = CachedNetworkImageProvider(
@@ -190,7 +204,9 @@ class _SearchResultItemState extends State<_SearchResultItem>
         animation: animation,
         builder: (context, _) {
           return GestureDetector(
-            onTap: () {}, // TODO: play music
+            onTap: () {
+              print(widget.item.videoId);
+            }, // TODO: play music
             child: Card(
               color: Colors.transparent,
               child: Container(
@@ -214,18 +230,20 @@ class _SearchResultItemState extends State<_SearchResultItem>
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              widget.item.videoId,
-                              style: TextStyle(color: Colors.white),
+                              widget.item.publishedText,
+                              style: TextStyle(color: Colors.white)
                             ),
                           ),
                           Row(
                             children: <Widget>[
                               IconButton(
                                 icon: Icon(Icons.share),
-                                color: Colors.green,
-                                onPressed: () async {},
+                                color: Colors.greenAccent[400],
+                                onPressed: () {
+                                  // TODO: jump to share page
+                                },
                               ),
-                              // TODO: More buttons
+                              // ENHANCE: More buttons
                             ],
                           ),
                         ],
@@ -246,7 +264,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
                       padding: EdgeInsets.all(16.0),
                       alignment: Alignment.centerRight,
                       child: Text(
-                        widget.item.publishedText,
+                        '${_printDuration(Duration(seconds: widget.item.lengthSeconds))}',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
