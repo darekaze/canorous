@@ -8,12 +8,10 @@ enum PlayerState { stopped, playing, paused }
 
 // TODO: Separate Player logic to another file (bloc) and make global (singleton)
 class PlayerWidget extends StatefulWidget {
-  final String url;
   final bool isLocal;
   final PlayerMode mode;
 
   PlayerWidget({
-    @required this.url,
     this.isLocal = false,
     this.mode = PlayerMode.MEDIA_PLAYER,
     Key key,
@@ -28,6 +26,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   AudioPlayerState _audioPlayerState;
   Duration _duration;
   Duration _position;
+  String url = "http://www2.comp.polyu.edu.hk/~16097874d/test.mp3";
 
   Icon iconPlayorPause = Icon(Icons.play_arrow);
   Text musicName = Text("Music Name");
@@ -154,37 +153,44 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   }
 
   Future playorpause() async {
-    if (!_isPlaying || _isPaused) {
-      final playPosition = (_position != null &&
-              _duration != null &&
-              _position.inMilliseconds > 0 &&
-              _position.inMilliseconds < _duration.inMilliseconds)
-          ? _position
-          : null;
-      await _audioPlayer.play(widget.url,
-          isLocal: widget.isLocal, position: playPosition);
-      setState(() {
-        _playerState = PlayerState.playing;
-        iconPlayorPause = new Icon(Icons.pause);
-      });
-    } else {
-      await _audioPlayer.pause();
-      setState(() {
-        _playerState = PlayerState.paused;
-        iconPlayorPause = Icon(Icons.play_arrow);
-      });
+    if (this.url != null){
+      if (!_isPlaying || _isPaused) {
+        final playPosition = (_position != null &&
+                _duration != null &&
+                _position.inMilliseconds > 0 &&
+                _position.inMilliseconds < _duration.inMilliseconds)
+            ? _position
+            : null;
+        await _audioPlayer.play(this.url,
+            isLocal: widget.isLocal, position: playPosition);
+        setState(() {
+          _playerState = PlayerState.playing;
+          iconPlayorPause = new Icon(Icons.pause);
+        });
+      } else {
+        await _audioPlayer.pause();
+        setState(() {
+          _playerState = PlayerState.paused;
+          iconPlayorPause = Icon(Icons.play_arrow);
+        });
+      }
     }
   }
 
   Future playNext() async {
     stop();
-    await _audioPlayer.play(widget.url,
+    await _audioPlayer.play(this.url,
         isLocal: widget.isLocal, position: null);
     setState(() {
       musicName = Text("Second music");
       _playerState = PlayerState.playing;
       iconPlayorPause = Icon(Icons.pause);
     });
+  }
+
+  Future play(url) async {
+    this.url = url;
+    playNext();
   }
 
   Future stop() async {

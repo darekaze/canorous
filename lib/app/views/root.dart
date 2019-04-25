@@ -75,9 +75,8 @@ class _RootState extends State<Root> {
                   bottom: 0.0,
                   left: 0.0,
                   right: 0.0,
-                  child: PlayerWidget(
-                      url:
-                          "http://www2.comp.polyu.edu.hk/~16097874d/test.mp3")),
+                  child: AppProvider.getPlayer(context),
+              )
             ],
           ),
         ),
