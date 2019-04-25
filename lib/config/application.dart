@@ -1,3 +1,4 @@
+import 'package:canorous/app/components/player.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/config/env.dart';
 import 'package:canorous/config/routes.dart';
@@ -9,6 +10,7 @@ import 'package:fluro/fluro.dart';
 class Application {
   Router router;
   AppAPI appAPI;
+  PlayerWidget player;
   // TODO: init music player here (should be global)
 
   Future<void> onCreate() async {
@@ -16,6 +18,7 @@ class Application {
     _initRouter();
     await _initDB();
     _initAppAPI();
+    _initPlayer();
   }
 
   void _initRouter(){
@@ -34,6 +37,10 @@ class Application {
 
   void _initAppAPI() {
     appAPI = AppAPI();
+  }
+
+  void _initPlayer() {
+    player = PlayerWidget(); // TODO: change to init real player
   }
 
   void _initLog(){

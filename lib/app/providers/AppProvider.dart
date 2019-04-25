@@ -1,3 +1,4 @@
+import 'package:canorous/app/components/player.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/config/application.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,12 @@ class AppProvider extends InheritedWidget {
     return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application.appAPI;
   }
 
+  static PlayerWidget getPlayer(BuildContext context) {
+    return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application.player;
+  }
+
   static Application getApplication(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application;
   }
+
 }
