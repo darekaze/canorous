@@ -26,6 +26,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   AudioPlayerState _audioPlayerState;
   Duration _duration;
   Duration _position;
+  List list;
+  int listPosition;
   String url = "http://www2.comp.polyu.edu.hk/~16097874d/test.mp3";
 
   Icon iconPlayorPause = Icon(Icons.play_arrow);
@@ -178,6 +180,16 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   }
 
   Future playNext() async {
+    if (list.isNotEmpty){
+      if (listPosition < list.length - 1){
+        list = list.sublist(listPosition);
+        playList(list);
+      }
+    }
+  }
+
+  Future play(url) async {
+    this.url = url;
     stop();
     await _audioPlayer.play(this.url,
         isLocal: widget.isLocal, position: null);
@@ -188,10 +200,21 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     });
   }
 
-  Future play(url) async {
-    this.url = url;
-    playNext();
+  Future playList(list) async {
+    this.list = list;
+    if (this.list.isNotEmpty){
+      play(list[0]);
+      listPosition = 0;
+      list.forEach((i) {
+        if (i > 0){
+          while(_playerState == _isPlaying) {}
+          play(list[i]);
+          listPosition = i;
+        }
+      });
+    }
   }
+
 
   Future stop() async {
     await _audioPlayer.stop();
