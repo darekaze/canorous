@@ -1,6 +1,7 @@
 import 'package:canorous/app/components/player.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/app/views/frontpage/home.dart';
+import 'package:canorous/app/views/frontpage/moment.dart';
 import 'package:canorous/app/views/frontpage/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +21,9 @@ class _RootState extends State<Root> {
     return IndexedStack(
       index: _currentIndex,
       children: [
-        // TODO: implement other pages
-        HomePage(),
+        HomeScreen(),
         SearchScreen(appAPI: AppProvider.getAPI(context)),
-        Container(
-          color: Colors.purple,
-        ),
+        MomentScreen(),
       ],
     );
   }
@@ -63,7 +61,7 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Stack(
           children: <Widget>[

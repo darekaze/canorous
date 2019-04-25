@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 // TODO: Change to stateless?
-class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: ListView(scrollDirection: Axis.vertical, children: [
         Container(
           alignment: Alignment.centerLeft,

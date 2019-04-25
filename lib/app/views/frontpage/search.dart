@@ -5,6 +5,7 @@ import 'package:canorous/app/bloc/search/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// TODO: finalize UI
 class SearchScreen extends StatefulWidget {
   final AppAPI appAPI;
 
@@ -46,6 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
           _SearchBody(searchBloc: _searchBloc),
         ],
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 }
