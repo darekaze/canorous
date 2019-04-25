@@ -68,17 +68,17 @@ class _RootState extends State<Root> {
             Positioned.fill(child: _buildTabContent()),
             // TODO: require further change
             Positioned(
-                bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: AppProvider.getPlayer(context), // Should not be like this
+              bottom: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: AppProvider.getPlayer(context), // Should not be like this
             )
           ],
         ),
       ),
       bottomNavigationBar: SafeArea(
         child: _buildTabBar(),
-    ),
+      ),
     );
   }
 }

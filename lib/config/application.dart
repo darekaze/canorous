@@ -10,8 +10,7 @@ import 'package:fluro/fluro.dart';
 class Application {
   Router router;
   AppAPI appAPI;
-  PlayerWidget player;
-  // TODO: init music player here (should be global)
+  PlayerWidget player; // TODO: int player, not widget...
 
   Future<void> onCreate() async {
     _initLog();
@@ -21,7 +20,7 @@ class Application {
     _initPlayer();
   }
 
-  void _initRouter(){
+  void _initRouter() {
     router = Router();
     Routes.configureRoutes(router);
   }
@@ -43,19 +42,21 @@ class Application {
     player = PlayerWidget(); // TODO: change to init real player
   }
 
-  void _initLog(){
+  void _initLog() {
     Log.init();
 
-    switch(Env.value.envType){
+    switch (Env.value.envType) {
       case EnvType.TESTING:
-      case EnvType.DEVELOPMENT:{
-        Log.setLevel(Level.ALL);
-        break;
-      }
-      case EnvType.PRODUCTION:{
-        Log.setLevel(Level.INFO);
-        break;
-      }
+      case EnvType.DEVELOPMENT:
+        {
+          Log.setLevel(Level.ALL);
+          break;
+        }
+      case EnvType.PRODUCTION:
+        {
+          Log.setLevel(Level.INFO);
+          break;
+        }
     }
   }
 

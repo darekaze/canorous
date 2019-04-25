@@ -21,16 +21,16 @@ class _AppComponentState extends State<AppComponent> {
   @override
   Widget build(BuildContext context) {
     final app = MaterialApp(
-        title: Env.value.appName,
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme,
-        onGenerateRoute: widget._application.router.generator,
-        localizationsDelegates: [
-          // S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate
-        ],
-        // supportedLocales: S.delegate.supportedLocales,
+      title: Env.value.appName,
+      debugShowCheckedModeBanner: false,
+      theme: lightTheme,
+      onGenerateRoute: widget._application.router.generator,
+      localizationsDelegates: [
+        // S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      // supportedLocales: S.delegate.supportedLocales,
     );
     print('initial core.route = ${app.initialRoute}');
 
