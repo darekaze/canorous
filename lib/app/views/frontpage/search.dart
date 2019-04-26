@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/SearchResult.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
+import 'package:canorous/data/dao/TrackDao.dart';
+import 'package:canorous/data/model/Track.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// TODO: finalize UI
 class SearchScreen extends StatefulWidget {
   final AppAPI appAPI;
 
@@ -206,7 +207,14 @@ class _SearchResultItemState extends State<_SearchResultItem>
           return GestureDetector(
             onTap: () {
               print(widget.item.videoId);
-            }, // TODO: play music
+              TrackDao().insert(Track(
+                title: widget.item.title,
+                videoId: widget.item.videoId,
+                duration: widget.item.lengthSeconds,
+              ));
+              print('Music added to track store');
+              // TODO: add play music @charlesZXY
+            },
             child: Card(
               color: Colors.transparent,
               child: Container(

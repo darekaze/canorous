@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_extractor/youtube_extractor.dart';
 
 enum PlayerState { stopped, playing, paused }
 
-// TODO: Separate Player logic to another file (bloc) and make global (singleton)
+// ENHANCE: Separate Player logic to another file (bloc) and make player global
 class PlayerWidget extends StatefulWidget {
   final bool isLocal;
   final PlayerMode mode;
@@ -43,10 +44,13 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   get _isPlaying => _playerState == PlayerState.playing;
   get _isPaused => _playerState == PlayerState.paused;
 
+  YouTubeExtractor extractor;
+
   @override
   void initState() {
     super.initState();
     _initAudioPlayer();
+    extractor = YouTubeExtractor();
   }
 
   @override
@@ -115,6 +119,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
           ],
         ));
   }
+
+  // --- LOGIC ---
 
   void _initAudioPlayer() {
     _audioPlayer = AudioPlayer(mode: widget.mode);
@@ -188,13 +194,18 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     }
   }
 
+  Future playFromYT(String videoId) async {
+    var streamInfo = await extractor.getMediaStreamsAsync(videoId);
+    play(streamInfo.audio.first.url);
+  }
+
   Future play(url) async {
     this.url = url;
     stop();
     await _audioPlayer.play(this.url,
         isLocal: widget.isLocal, position: null);
     setState(() {
-      musicName = Text("Second music");
+      musicName = Text("Second music"); // TODO: move this to other place
       _playerState = PlayerState.playing;
       iconPlayorPause = Icon(Icons.pause);
     });
@@ -214,7 +225,6 @@ class _PlayerWidgetState extends State<PlayerWidget> {
       });
     }
   }
-
 
   Future stop() async {
     await _audioPlayer.stop();

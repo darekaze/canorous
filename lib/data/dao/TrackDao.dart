@@ -13,6 +13,7 @@ class TrackDao {
 
   // Sample: insert a track
   Future insert(Track track) async {
+    // TODO: avoid repetition insertion
     await _trackStore.add(await _db, track.toJson());
   }
 }

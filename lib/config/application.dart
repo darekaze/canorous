@@ -10,7 +10,7 @@ import 'package:fluro/fluro.dart';
 class Application {
   Router router;
   AppAPI appAPI;
-  PlayerWidget player; // TODO: int player, not widget...
+  PlayerWidget player; // ENHANCE: init player, not widget...
 
   Future<void> onCreate() async {
     _initLog();
@@ -39,7 +39,7 @@ class Application {
   }
 
   void _initPlayer() {
-    player = PlayerWidget(); // TODO: change to init real player
+    player = PlayerWidget(); // ENHANCE: change to init real player instance
   }
 
   void _initLog() {
