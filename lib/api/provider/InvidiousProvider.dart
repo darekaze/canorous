@@ -10,20 +10,21 @@ class InvidiousProvider extends APIProvider {
 
   // Invidious api calls below..
 
-  Future<SearchResult> search(String term) async {
+  Future search(String term) async {
     const _SEARCH_API = '/search';
-    // TODO: Try catch here
-    final Response response = await dio.get(
-      _SEARCH_API,
-      queryParameters: {
-        'q': term,
-        'type':'video',
-        'duration':'short',
-        'sort_by':'relevance',
-      },
-    );
-    return (response.statusCode == 200)
-      ? SearchResult.fromJson(response.data)
-      : SearchResultError.fromJson(response.data);
+    try {
+      final Response response = await dio.get(
+        _SEARCH_API,
+        queryParameters: {
+          'q': term,
+          'type':'video',
+          'duration':'short',
+          'sort_by':'relevance',
+        },
+      );
+      return SearchResult.fromJson(response.data);
+    } on DioError catch(e) {
+      return SearchResultError.fromJson(e.response.data);
+    }
   }
 }

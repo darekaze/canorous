@@ -24,36 +24,26 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   @override
   Stream<PostState> mapEventToState(PostEvent event) async* {
     if (event is FetchPosts && !_hasReachedMax(currentState)) {
-      yield* _mapFetchPostsToState();
-    } else if (event is SendPost) {
-      yield* _mapSendPostToState(event);
+      try {
+        if (currentState is PostUninitialized) {
+          final posts = await appAPI.fetchPosts(0, 20);
+          yield PostLoaded(posts: posts, hasReachedMax: false);
+        } else if (currentState is PostLoaded) {
+          final posts = await appAPI.fetchPosts(
+              (currentState as PostLoaded).posts.length, 20);
+          yield posts.isEmpty
+              ? (currentState as PostLoaded).copyWith(hasReachedMax: true)
+              : PostLoaded(
+                  posts: (currentState as PostLoaded).posts + posts,
+                  hasReachedMax: false,
+                );
+        }
+      } catch (_) {
+        yield PostError();
+      }
     }
   }
 
   bool _hasReachedMax(PostState state) =>
       state is PostLoaded && state.hasReachedMax;
-
-  Stream<PostState> _mapFetchPostsToState() async* {
-    try {
-      if (currentState is PostUninitialized) {
-        final posts = await appAPI.fetchPosts(0, 20);
-        yield PostLoaded(posts: posts, hasReachedMax: false);
-      } else if (currentState is PostLoaded) {
-        final posts =
-            await appAPI.fetchPosts((currentState as PostLoaded).posts.length, 20);
-        yield posts.isEmpty
-            ? (currentState as PostLoaded).copyWith(hasReachedMax: true)
-            : PostLoaded(
-              posts: (currentState as PostLoaded).posts + posts,
-              hasReachedMax: false,
-            );
-      }
-    } catch (_) {
-      yield PostError();
-    }
-  }
-
-  Stream<PostState> _mapSendPostToState(SendPost event) async* {
-    // TODO: Implement send post
-  }
 }

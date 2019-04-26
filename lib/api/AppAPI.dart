@@ -1,19 +1,19 @@
 import 'package:canorous/api/cache/InvidiousCache.dart';
 import 'package:canorous/api/model/Post.dart';
 import 'package:canorous/api/model/SearchResult.dart';
-// import 'package:canorous/api/provider/CanorousProvider.dart';
+import 'package:canorous/api/provider/CanorousProvider.dart';
 import 'package:canorous/api/provider/InvidiousProvider.dart';
 import 'package:canorous/data/AppDatabase.dart';
 import 'package:sembast/sembast.dart';
 
 class AppAPI {
   AppAPI() {
-    // _cProvider = CanorousProvider();
+    _cProvider = CanorousProvider();
     _iProvider = InvidiousProvider();
     _iCache = InvidiousCache();
   }
 
-  // CanorousProvider _cProvider;
+  CanorousProvider _cProvider;
   InvidiousProvider _iProvider;
   InvidiousCache _iCache;
 
@@ -26,14 +26,14 @@ class AppAPI {
       return _iCache.get(term);
     } else {
       final result = await _iProvider.search(term);
-      // TODO: if error don't save to cache
-      _iCache.set(term, result);
+      if (result is SearchResult) {
+        _iCache.set(term, result);
+      }
       return result;
     }
   }
 
   Future<List<Post>> fetchPosts(int startIndex, int limit) async {
-    // final result = await _cProvider
-    // TODO: fetch..
+    return await _cProvider.fetchPosts(startIndex, limit);
   }
 }

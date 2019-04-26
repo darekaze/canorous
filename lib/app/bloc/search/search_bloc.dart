@@ -40,10 +40,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         try {
           final results = await appAPI.searchMusic(searchTerm);
           yield SearchStateSuccess(results.items);
-        } catch (error) {
-          yield error is SearchResultError
-            ? SearchStateError(error.error)
-            : SearchStateError('Something went wrong');
+        } catch (e) {
+          yield e is SearchResultError
+            ? SearchStateError(e.error)
+            : SearchStateError('No connection');
         }
       }
     }
