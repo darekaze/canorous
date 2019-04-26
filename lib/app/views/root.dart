@@ -1,4 +1,3 @@
-import 'package:canorous/app/components/player.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/app/views/frontpage/home.dart';
 import 'package:canorous/app/views/frontpage/moment.dart';
@@ -66,12 +65,12 @@ class _RootState extends State<Root> {
         child: Stack(
           children: <Widget>[
             Positioned.fill(child: _buildTabContent()),
-            // TODO: require further change
+            // ENHANCE: Planned further change
             Positioned(
               bottom: 0.0,
               left: 0.0,
               right: 0.0,
-              child: AppProvider.getPlayer(context), // Should not be like this
+              child: AppProvider.getPlayer(context), // here
             )
           ],
         ),

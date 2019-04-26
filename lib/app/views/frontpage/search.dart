@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/SearchResult.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
+import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/data/dao/TrackDao.dart';
 import 'package:canorous/data/model/Track.dart';
 import 'package:flutter/material.dart';
@@ -206,14 +207,13 @@ class _SearchResultItemState extends State<_SearchResultItem>
         builder: (context, _) {
           return GestureDetector(
             onTap: () {
-              print(widget.item.videoId);
               TrackDao().insert(Track(
                 title: widget.item.title,
                 videoId: widget.item.videoId,
                 duration: widget.item.lengthSeconds,
               ));
-              print('Music added to track store');
-              // TODO: add play music @charlesZXY
+              print('Music added to track store: ${widget.item.videoId}');
+              AppProvider.getPlayer(context).playFromYT(widget.item.videoId);
             },
             child: Card(
               color: Colors.transparent,

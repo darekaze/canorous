@@ -11,6 +11,7 @@ enum PlayerState { stopped, playing, paused }
 class PlayerWidget extends StatefulWidget {
   final bool isLocal;
   final PlayerMode mode;
+  final _PlayerWidgetState playerState = _PlayerWidgetState();
 
   PlayerWidget({
     this.isLocal = false,
@@ -19,7 +20,15 @@ class PlayerWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PlayerWidgetState createState() => _PlayerWidgetState();
+  _PlayerWidgetState createState() => playerState;
+
+  void playFromYT(String videoId) {
+    playerState.playFromYT(videoId);
+  }
+
+  void playList(list) {
+    playerState.playList(list);
+  }
 }
 
 class _PlayerWidgetState extends State<PlayerWidget> {
