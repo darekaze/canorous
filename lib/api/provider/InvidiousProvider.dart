@@ -12,6 +12,7 @@ class InvidiousProvider extends APIProvider {
 
   Future<SearchResult> search(String term) async {
     const _SEARCH_API = '/search';
+    // TODO: Try catch here
     final Response response = await dio.get(
       _SEARCH_API,
       queryParameters: {

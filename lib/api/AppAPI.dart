@@ -1,6 +1,7 @@
-// import 'package:canorous/api/provider/CanorousProvider.dart';
 import 'package:canorous/api/cache/InvidiousCache.dart';
+import 'package:canorous/api/model/Post.dart';
 import 'package:canorous/api/model/SearchResult.dart';
+// import 'package:canorous/api/provider/CanorousProvider.dart';
 import 'package:canorous/api/provider/InvidiousProvider.dart';
 import 'package:canorous/data/AppDatabase.dart';
 import 'package:sembast/sembast.dart';
@@ -25,8 +26,14 @@ class AppAPI {
       return _iCache.get(term);
     } else {
       final result = await _iProvider.search(term);
+      // TODO: if error don't save to cache
       _iCache.set(term, result);
       return result;
     }
+  }
+
+  Future<List<Post>> fetchPosts(int startIndex, int limit) async {
+    // final result = await _cProvider
+    // TODO: fetch..
   }
 }
