@@ -23,7 +23,10 @@ class CanorousProvider extends APIProvider {
           '_limit': limit,
         },
       );
-      return Post.fromJson(response.data);
+      return (response.data as List)
+          .map(
+              (dynamic item) => Post.fromJson(item as Map<String, dynamic>))
+          .toList();
     } on DioError catch (e) {
       print(e.error);
     }

@@ -6,14 +6,14 @@ part of 'Post.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PostItem _$PostItemFromJson(Map<String, dynamic> json) {
-  return PostItem(
+Post _$PostFromJson(Map<String, dynamic> json) {
+  return Post(
       id: json['id'] as int,
       title: json['title'] as String,
       body: json['body'] as String);
 }
 
-Map<String, dynamic> _$PostItemToJson(PostItem instance) => <String, dynamic>{
+Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'body': instance.body

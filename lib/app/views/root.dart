@@ -22,7 +22,7 @@ class _RootState extends State<Root> {
       children: [
         HomeScreen(),
         SearchScreen(appAPI: AppProvider.getAPI(context)),
-        MomentScreen(),
+        MomentScreen(appAPI: AppProvider.getAPI(context)),
       ],
     );
   }

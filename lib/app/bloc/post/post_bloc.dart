@@ -27,6 +27,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       try {
         if (currentState is PostUninitialized) {
           final posts = await appAPI.fetchPosts(0, 20);
+          print('CAOOOOOOOOO');
           yield PostLoaded(posts: posts, hasReachedMax: false);
         } else if (currentState is PostLoaded) {
           final posts = await appAPI.fetchPosts(

@@ -1,4 +1,3 @@
-import 'package:canorous/api/model/Post.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
