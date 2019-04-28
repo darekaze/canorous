@@ -251,6 +251,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
                           Row(
                             children: <Widget>[
                               IconButton(
+                                iconSize: 24,
                                 icon: Icon(CupertinoIcons.bookmark),
                                 color: CupertinoColors.activeGreen,
                                 onPressed: () {
@@ -258,6 +259,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
                                 },
                               ),
                               IconButton(
+                                iconSize: 30,
                                 icon: Icon(share),
                                 color: CupertinoColors.activeGreen,
                                 onPressed: () {
