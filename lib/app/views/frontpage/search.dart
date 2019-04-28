@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/SearchResult.dart';
+import 'package:canorous/app/bloc/playlist/bloc.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/data/dao/TrackDao.dart';
@@ -167,6 +168,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
     with TickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
+  PlaylistBloc _playListBloc;
   IconData share = const IconData(
     0xf473, 
     fontFamily: CupertinoIcons.iconFont, 
@@ -181,6 +183,8 @@ class _SearchResultItemState extends State<_SearchResultItem>
       vsync: this,
     );
     animation = Tween(begin: 1.0, end: 0.5).animate(controller);
+    _playListBloc = BlocProvider.of<PlaylistBloc>(context);
+    _playListBloc.dispatch(LoadPlayLists());
   }
 
   @override
@@ -208,6 +212,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
     image.resolve(ImageConfiguration()).addListener((imageInfo, syncCall) {
       if (mounted) controller.forward();
     });
+
     return AnimatedBuilder(
         animation: animation,
         builder: (context, _) {
@@ -255,7 +260,44 @@ class _SearchResultItemState extends State<_SearchResultItem>
                                 icon: Icon(CupertinoIcons.bookmark),
                                 color: CupertinoColors.activeGreen,
                                 onPressed: () {
-                                  
+                                  showDialog<Null>(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                        return AlertDialog(
+                                            content: BlocBuilder(
+                                              bloc: _playListBloc,
+                                              builder: (BuildContext context, PlaylistState state) {
+                                                if (state is PlayListLoading) {
+                                                  return Center(
+                                                    child: CircularProgressIndicator(),
+                                                  );
+                                                } else if (state is PlayListLoaded) {
+                                                  return ListView.builder(
+                                                    itemCount: state.playLists.length,
+                                                    itemBuilder: (context, index) {
+                                                      final displayedPlayList = state.playLists[index];
+                                                      return ListTile(
+                                                        title: Text(displayedPlayList.title),
+                                                      );
+                                                    },
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                            actions: <Widget>[
+                                                new FlatButton(
+                                                    child: Text('Cancel'),
+                                                    onPressed: () {
+                                                        Navigator.of(context).pop();
+                                                    },
+                                                ),
+                                            ],
+                                        );
+                                    },
+                                  ).then((val) {
+                                      print(val);
+                                  });
                                 },
                               ),
                               IconButton(
