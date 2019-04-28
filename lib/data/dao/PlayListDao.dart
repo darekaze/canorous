@@ -45,4 +45,14 @@ class PlayListDao {
     );
   }
   
+  Future <List<PlayList>> getAllStoredByName() async {
+    final finder = Finder(sortOrders: [
+      SortOrder('title'),
+    ]);
+    final RecordSnapshot = await _playListStore.find(
+      await _db,
+      finder: finder,
+    );
+  }
+
 }
