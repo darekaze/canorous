@@ -270,9 +270,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
                                           )
                                         );
                                     },
-                                  ).then((val) {
-                                      print(val);
-                                  });
+                                  ).then((val) {});
                                 },
                               ),
                               IconButton(
@@ -327,14 +325,13 @@ class _PlayList extends StatefulWidget {
 
 class _PlayListState extends State<_PlayList> {
   PlaylistBloc _playListBloc = PlaylistBloc();
-  static Track track_demo = Track(title: "title", videoId: "videoId", duration: 1);
-  static List<Track> demolist = new List<Track>();
-  PlayList demo = PlayList(title: "demo2", tracks: demolist);
+  //static Track track_demo = Track(title: "title", videoId: "videoId", duration: 1);
+  //PlayList demo = PlayList(title: "demo5", tracksTitle: [], tracksVideoId: [], tracksDuration: []);
   
   @override
   void initState() {
     super.initState();
-    _playListBloc.dispatch(CreatePlayList(demo));
+    //_playListBloc.dispatch(CreatePlayList(demo));
     _playListBloc.dispatch(LoadPlayLists());
   }
 
@@ -364,7 +361,6 @@ class _PlayListState extends State<_PlayList> {
                       icon: Icon(CupertinoIcons.add),
                       onPressed: (){
                         _playListBloc.dispatch(InsertTrack(displayedPlayList, widget.track));
-                        print(displayedPlayList.tracks.length);
                         Navigator.of(context).pop();
                       },
                     ),

@@ -26,7 +26,10 @@ class PlayListDao {
   }
 
   Future insertTrack(PlayList playList, Track track) async {
-    playList.tracks.add(track);
+    playList.tracksTitle.add(track.title);
+    playList.tracksVideoId.add(track.videoId);
+    playList.tracksDuration.add(track.duration);
+    //print(playList.tracks[0]);
     final finder = Finder(filter: Filter.byKey(playList.id));
     await _playListStore.update(
       await _db,
@@ -36,7 +39,9 @@ class PlayListDao {
   }
 
   Future deleteTrack(PlayList playList, Track track) async {
-    playList.tracks.remove(track);
+    playList.tracksTitle.remove(track.title);
+    playList.tracksVideoId.remove(track.videoId);
+    playList.tracksDuration.remove(track.duration);
     final finder = Finder(filter: Filter.byKey(playList.id));
     await _playListStore.update(
       await _db,

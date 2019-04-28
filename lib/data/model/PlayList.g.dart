@@ -9,15 +9,19 @@ part of 'PlayList.dart';
 PlayList _$PlayListFromJson(Map<String, dynamic> json) {
   return PlayList(
       title: json['title'] as String,
-      tracks: (json['tracks'] as List)
-          ?.map((e) =>
-              e == null ? null : Track.fromJson(e as Map<String, dynamic>))
-          ?.toList())
+      tracksTitle:
+          (json['tracksTitle'] as List)?.map((e) => e as String)?.toList(),
+      tracksVideoId:
+          (json['tracksVideoId'] as List)?.map((e) => e as String)?.toList(),
+      tracksDuration:
+          (json['tracksDuration'] as List)?.map((e) => e as int)?.toList())
     ..id = json['id'] as int;
 }
 
 Map<String, dynamic> _$PlayListToJson(PlayList instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'tracks': instance.tracks
+      'tracksTitle': instance.tracksTitle,
+      'tracksVideoId': instance.tracksVideoId,
+      'tracksDuration': instance.tracksDuration
     };

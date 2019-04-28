@@ -6,10 +6,13 @@ part 'PlayList.g.dart';
 @JsonSerializable()
 class PlayList {
   int id; // Auto-gen by SEMBAST
-  PlayList({this.title, this.tracks});
+  PlayList({this.title, this.tracksTitle, this.tracksVideoId, this.tracksDuration});
 
   String title;
-  List <Track> tracks;
+  List<String> tracksTitle;
+  List<String> tracksVideoId;
+  List<int> tracksDuration;
+
 
   factory PlayList.fromJson(Map<String, dynamic> json) => _$PlayListFromJson(json);
 

@@ -470,6 +470,39 @@ class _PlayListState extends State<_PlayList> {
                               }
                             );
                           },
+                          onLongPress: () {
+                            showDialog<Null>(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Container(
+                                    child: Text("Are you sure to delete " + (displayedPlayList.title == null ? "Default" : displayedPlayList.title)),
+                                  ),
+                                  actions: <Widget>[
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        new FlatButton(
+                                          child: Text('Confirm'),
+                                          onPressed: () {
+                                            _playListBloc.dispatch(DeletePlayList(displayedPlayList));
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        new FlatButton(
+                                          child: Text('Cancel'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              }
+                            );
+                          },
                         ),
                         Container(
                           alignment: Alignment.center,
@@ -526,22 +559,21 @@ class _TracksState extends State<_Tracks> {
     return AlertDialog(
       content: Container(
         width: 400,
-        height: 400,
+        height: 200,
         child: ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemCount: widget.playList.tracks.length,
+                itemCount: widget.playList.tracksTitle.length,
                 itemBuilder: (context, index) {
-                  final displayedTrack = widget.playList.tracks[index];
+                  final displayedTrack = widget.playList.tracksTitle[index];
                   return ListTile(
-                    title: Text(displayedTrack.title == null ? "Default" : displayedTrack.title),
-                    /*trailing: IconButton(
-                      icon: Icon(CupertinoIcons.add),
+                    title: Text(displayedTrack == null ? "Default" : displayedTrack),
+                    trailing: IconButton(
+                      icon: Icon(CupertinoIcons.delete),
                       onPressed: (){
-                        _playListBloc.dispatch(InsertTrack(displayedPlayList, widget.track));
+                        _playListBloc.dispatch(DeleteTrack(widget.playList, Track(title: widget.playList.tracksTitle[index], videoId: widget.playList.tracksVideoId[index], duration: widget.playList.tracksDuration[index])));
                         Navigator.of(context).pop();
                       },
                     ),
-                    */
                   );
                 },
         )
