@@ -449,6 +449,9 @@ class _PlayListState extends State<_PlayList> {
                 child: CircularProgressIndicator(),
               );
             } else if (state is PlayListLoaded) {
+              if (state.playLists.length == 0) {
+                _playListBloc.dispatch(CreatePlayList(PlayList(title: "default", tracksTitle: [], tracksVideoId: [], tracksDuration: [])));
+              }
               return ListView.builder(
                 scrollDirection: Axis.horizontal,
                 physics: BouncingScrollPhysics(),
