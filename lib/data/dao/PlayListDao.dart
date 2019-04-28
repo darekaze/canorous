@@ -49,10 +49,14 @@ class PlayListDao {
     final finder = Finder(sortOrders: [
       SortOrder('title'),
     ]);
-    final RecordSnapshot = await _playListStore.find(
+    final recordSnapshots = await _playListStore.find(
       await _db,
       finder: finder,
     );
+    return recordSnapshots.map((snapshot) {
+      final playList = PlayList.fromJson(snapshot.value);
+      playList.id = snapshot.key;
+      return playList;
+    }).toList();
   }
-
 }
