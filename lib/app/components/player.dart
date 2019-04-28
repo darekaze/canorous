@@ -22,8 +22,8 @@ class PlayerWidget extends StatefulWidget {
   @override
   _PlayerWidgetState createState() => playerState;
 
-  void playFromYT(String videoId) {
-    playerState.playFromYT(videoId);
+  void playFromYT(String videoId, String name) {
+    playerState.playFromYT(videoId, name);
   }
 
   void playList(list) {
@@ -107,7 +107,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     ),
                   ],
                 ),
-                Container(padding: EdgeInsets.only(left: 15), child: musicName),
+                Container(padding: EdgeInsets.only(left: 15), width: 200, height: 20,child: musicName),
               ],
             ),
             Row(
@@ -203,18 +203,21 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     }
   }
 
-  Future playFromYT(String videoId) async {
+  Future playFromYT(String videoId, String name) async {
     var streamInfo = await extractor.getMediaStreamsAsync(videoId);
-    play(streamInfo.audio.first.url);
+    play(streamInfo.audio.first.url, name);
   }
 
-  Future play(url) async {
+  Future play(String url, String name) async {
     this.url = url;
     stop();
     await _audioPlayer.play(this.url,
         isLocal: widget.isLocal, position: null);
     setState(() {
-      musicName = Text("Second music"); // TODO: move this to other place
+      musicName = Text(
+        name,
+        overflow: TextOverflow.ellipsis,
+      );
       _playerState = PlayerState.playing;
       iconPlayorPause = Icon(Icons.pause);
     });
@@ -223,12 +226,12 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   Future playList(list) async {
     this.list = list;
     if (this.list.isNotEmpty){
-      play(list[0]);
+      play(list[0], null);
       listPosition = 0;
       list.forEach((i) {
         if (i > 0){
           while(_playerState == _isPlaying) {}
-          play(list[i]);
+          play(list[i], null);
           listPosition = i;
         }
       });

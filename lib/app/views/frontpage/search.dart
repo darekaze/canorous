@@ -222,7 +222,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
                 duration: widget.item.lengthSeconds,
               ));
               print('Music added to track store: ${widget.item.videoId}');
-              AppProvider.getPlayer(context).playFromYT(widget.item.videoId);
+              AppProvider.getPlayer(context).playFromYT(widget.item.videoId, widget.item.title);
             },
             child: Card(
               color: Colors.transparent,
@@ -328,7 +328,8 @@ class _PlayList extends StatefulWidget {
 class _PlayListState extends State<_PlayList> {
   PlaylistBloc _playListBloc = PlaylistBloc();
   static Track track_demo = Track(title: "title", videoId: "videoId", duration: 1);
-  PlayList demo = PlayList(title: "newdemo", tracks: List());
+  static List<Track> demolist = new List<Track>();
+  PlayList demo = PlayList(title: "demo2", tracks: demolist);
   
   @override
   void initState() {
@@ -353,6 +354,7 @@ class _PlayListState extends State<_PlayList> {
               );
             } else if (state is PlayListLoaded) {
               return ListView.builder(
+                physics: BouncingScrollPhysics(),
                 itemCount: state.playLists.length,
                 itemBuilder: (context, index) {
                   final displayedPlayList = state.playLists[index];
@@ -362,6 +364,7 @@ class _PlayListState extends State<_PlayList> {
                       icon: Icon(CupertinoIcons.add),
                       onPressed: (){
                         _playListBloc.dispatch(InsertTrack(displayedPlayList, widget.track));
+                        print(displayedPlayList.tracks.length);
                         Navigator.of(context).pop();
                       },
                     ),
