@@ -5,6 +5,7 @@ import 'package:canorous/app/bloc/playlist/bloc.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/data/dao/TrackDao.dart';
+import 'package:canorous/data/model/PlayList.dart';
 import 'package:canorous/data/model/Track.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -168,7 +169,6 @@ class _SearchResultItemState extends State<_SearchResultItem>
     with TickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
-  PlaylistBloc _playListBloc;
   IconData share = const IconData(
     0xf473, 
     fontFamily: CupertinoIcons.iconFont, 
@@ -183,8 +183,6 @@ class _SearchResultItemState extends State<_SearchResultItem>
       vsync: this,
     );
     animation = Tween(begin: 1.0, end: 0.5).animate(controller);
-    _playListBloc = BlocProvider.of<PlaylistBloc>(context);
-    _playListBloc.dispatch(LoadPlayLists());
   }
 
   @override
@@ -264,35 +262,12 @@ class _SearchResultItemState extends State<_SearchResultItem>
                                     context: context,
                                     barrierDismissible: false,
                                     builder: (BuildContext context) {
-                                        return AlertDialog(
-                                            content: BlocBuilder(
-                                              bloc: _playListBloc,
-                                              builder: (BuildContext context, PlaylistState state) {
-                                                if (state is PlayListLoading) {
-                                                  return Center(
-                                                    child: CircularProgressIndicator(),
-                                                  );
-                                                } else if (state is PlayListLoaded) {
-                                                  return ListView.builder(
-                                                    itemCount: state.playLists.length,
-                                                    itemBuilder: (context, index) {
-                                                      final displayedPlayList = state.playLists[index];
-                                                      return ListTile(
-                                                        title: Text(displayedPlayList.title),
-                                                      );
-                                                    },
-                                                  );
-                                                }
-                                              },
-                                            ),
-                                            actions: <Widget>[
-                                                new FlatButton(
-                                                    child: Text('Cancel'),
-                                                    onPressed: () {
-                                                        Navigator.of(context).pop();
-                                                    },
-                                                ),
-                                            ],
+                                        return _PlayList(
+                                          track: Track(
+                                            title: widget.item.title,
+                                            videoId: widget.item.videoId,
+                                            duration: widget.item.lengthSeconds,
+                                          )
                                         );
                                     },
                                   ).then((val) {
@@ -339,5 +314,72 @@ class _SearchResultItemState extends State<_SearchResultItem>
             ),
           );
         });
+  }
+}
+
+
+class _PlayList extends StatefulWidget {
+  final Track track;
+  _PlayList({this.track});
+  @override
+  _PlayListState createState() => _PlayListState();
+}
+
+class _PlayListState extends State<_PlayList> {
+  PlaylistBloc _playListBloc = PlaylistBloc();
+  static Track track_demo = Track(title: "title", videoId: "videoId", duration: 1);
+  PlayList demo = PlayList(title: "newdemo", tracks: List());
+  
+  @override
+  void initState() {
+    super.initState();
+    _playListBloc.dispatch(CreatePlayList(demo));
+    _playListBloc.dispatch(LoadPlayLists());
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Container(
+        width: 400,
+        height: 400,
+        child: BlocBuilder(
+          bloc: _playListBloc,
+          builder: (BuildContext context, PlaylistState state) {
+            if (state is PlayListLoading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is PlayListLoaded) {
+              return ListView.builder(
+                itemCount: state.playLists.length,
+                itemBuilder: (context, index) {
+                  final displayedPlayList = state.playLists[index];
+                  return ListTile(
+                    title: Text(displayedPlayList.title == null ? "Default" : displayedPlayList.title),
+                    trailing: IconButton(
+                      icon: Icon(CupertinoIcons.add),
+                      onPressed: (){
+                        _playListBloc.dispatch(InsertTrack(displayedPlayList, widget.track));
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ),
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          child: Text('Cancel'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
   }
 }
