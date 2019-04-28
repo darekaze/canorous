@@ -7,6 +7,7 @@ import 'package:canorous/data/dao/TrackDao.dart';
 import 'package:canorous/data/model/Track.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/cupertino.dart';
 
 class SearchScreen extends StatefulWidget {
   final AppAPI appAPI;
@@ -166,6 +167,11 @@ class _SearchResultItemState extends State<_SearchResultItem>
     with TickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
+  IconData share = const IconData(
+    0xf473, 
+    fontFamily: CupertinoIcons.iconFont, 
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
 
   @override
   void initState() {
@@ -245,10 +251,17 @@ class _SearchResultItemState extends State<_SearchResultItem>
                           Row(
                             children: <Widget>[
                               IconButton(
-                                icon: Icon(Icons.share),
-                                color: Colors.greenAccent[400],
+                                icon: Icon(CupertinoIcons.bookmark),
+                                color: CupertinoColors.activeGreen,
                                 onPressed: () {
-                                  // TODO: jump to share page
+                                  
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(share),
+                                color: CupertinoColors.activeGreen,
+                                onPressed: () {
+                                  
                                 },
                               ),
                               // ENHANCE: More buttons
