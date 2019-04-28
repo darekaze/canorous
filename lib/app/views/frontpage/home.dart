@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+ bool refresh = false;
+
 // TODO: Change to stateless?
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -14,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController TextController = TextEditingController();
   PlaylistBloc _playListBloc = PlaylistBloc();
 
   @override
@@ -22,77 +23,26 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: ListView(scrollDirection: Axis.vertical, children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.grey[500], width: 0.5)
-                )
-              ),
-              padding: EdgeInsets.only(
-                top: 20,
-                bottom: 5,
-                left: 10,
-                right: 10
-              ),
-              child: Text(
-                "PlayLists",
-                style: new TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold
-                ),
-              )
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: Colors.grey[500], width: 0.5)
+            )
+          ),
+          padding: EdgeInsets.only(
+            top: 20,
+            bottom: 5,
+            left: 10,
+            right: 10
+          ),
+          child: Text(
+            "PlayLists",
+            style: new TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold
             ),
-            Container(
-              child: IconButton(
-                icon: Icon(CupertinoIcons.add_circled),
-                iconSize: 30,
-                color: CupertinoColors.activeGreen,
-                onPressed: (){
-                  showDialog<Null>(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        content: Container(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10.0),
-                              labelText: 'Please enter a name',
-                            ),
-                            controller: TextController,
-                          ),
-                        ),
-                        actions: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              new FlatButton(
-                                child: Text('Confirm'),
-                                onPressed: () {
-                                  _playListBloc.dispatch(CreatePlayList(PlayList(title: TextController.text, tracksTitle: [], tracksVideoId: [], tracksDuration: [])));
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              new FlatButton(
-                                child: Text('Cancel'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      );
-                    }
-                  );
-                },
-              ),
-            ),
-          ],
+          )
         ),
         _PlayList(),
         Container(
@@ -471,6 +421,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 class _PlayList extends StatefulWidget {
+  
   @override
   _PlayListState createState() => _PlayListState();
 }
@@ -557,6 +508,46 @@ class _PlayListState extends State<_PlayList> {
                               }
                             );
                           },
+                          onDoubleTap: (){
+                            TextEditingController textController = TextEditingController();
+                            showDialog<Null>(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Container(
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.all(10.0),
+                                        labelText: 'Please enter a name',
+                                      ),
+                                      controller: textController,
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        new FlatButton(
+                                          child: Text('Confirm'),
+                                          onPressed: () {
+                                            _playListBloc.dispatch(CreatePlayList(PlayList(title: textController.text, tracksTitle: [], tracksVideoId: [], tracksDuration: [])));
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        new FlatButton(
+                                          child: Text('Cancel'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              }
+                            );
+                          }
                         ),
                         Container(
                           alignment: Alignment.center,
