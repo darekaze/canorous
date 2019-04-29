@@ -1,4 +1,5 @@
 import 'package:canorous/app/providers/AppProvider.dart';
+import 'package:canorous/app/views/root.dart';
 import 'package:canorous/config/application.dart';
 import 'package:canorous/config/env.dart';
 import 'package:canorous/utils/log/Log.dart';
@@ -24,6 +25,7 @@ class _AppComponentState extends State<AppComponent> {
       title: Env.value.appName,
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
+      initialRoute: Root.PATH,
       onGenerateRoute: widget._application.router.generator,
       localizationsDelegates: [
         // S.delegate,
