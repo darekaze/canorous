@@ -42,13 +42,17 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         yield PostError();
       }
     } else if (event is RefreshPosts) {
-      yield PostUninitialized();
-      try {
-        final posts = await appAPI.fetchPosts(0, 20);
-        yield PostLoaded(posts: posts, hasReachedMax: posts.length < 20);
-      } catch (_) {
-        yield PostError();
-      }
+      yield* _mapRefreshPostsToState();
+    }
+  }
+
+  Stream<PostState> _mapRefreshPostsToState() async* {
+    yield PostUninitialized();
+    try {
+      final posts = await appAPI.fetchPosts(0, 20);
+      yield PostLoaded(posts: posts, hasReachedMax: posts.length < 20);
+    } catch (_) {
+      yield PostError();
     }
   }
 
