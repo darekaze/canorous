@@ -12,34 +12,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 
 class SearchScreen extends StatefulWidget {
-  final AppAPI appAPI;
-
-  const SearchScreen({
-    Key key,
-    @required this.appAPI,
-  }) : super(key: key);
+  const SearchScreen({ Key key }) : super(key: key);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  SearchBloc _searchBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _searchBloc = SearchBloc(
-      appAPI: widget.appAPI,
-    );
-  }
-
-  @override
-  void dispose() {
-    _searchBloc.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     // ENHANCE: Change into stack and make searchbar float
@@ -47,12 +26,12 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: _SearchBar(searchBloc: _searchBloc),
+        title: _SearchBar(searchBloc: AppProvider.getBloc(context).searchBloc),
         centerTitle: true,
       ),
       body: Column(
         children: <Widget>[
-          _SearchBody(searchBloc: _searchBloc),
+          _SearchBody(searchBloc: AppProvider.getBloc(context).searchBloc),
         ],
       ),
       resizeToAvoidBottomInset: false,
@@ -215,7 +194,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
         animation: animation,
         builder: (context, _) {
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               TrackDao().insert(Track(
                 title: widget.item.title,
                 videoId: widget.item.videoId,

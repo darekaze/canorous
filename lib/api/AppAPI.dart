@@ -37,4 +37,9 @@ class AppAPI {
     final List<Post> result = await _cProvider.fetchPosts(startIndex, limit);
     return result;
   }
+
+  Future<Post> submitPost(Post post) async {
+    final Post result = await _cProvider.submitPost(post);
+    return result;
+  }
 }

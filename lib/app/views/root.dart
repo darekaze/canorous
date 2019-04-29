@@ -36,8 +36,8 @@ class _RootState extends State<Root> {
       index: _currentIndex,
       children: [
         HomeScreen(),
-        SearchScreen(appAPI: AppProvider.getAPI(context)),
-        MomentScreen(appAPI: AppProvider.getAPI(context)),
+        SearchScreen(),
+        MomentScreen(postBloc: AppProvider.getBloc(context).postBloc),
       ],
     );
   }

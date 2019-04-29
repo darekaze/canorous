@@ -10,3 +10,8 @@ class FetchPosts extends PostEvent {
   @override
   String toString() => 'Fetch Posts';
 }
+
+class RefreshPosts extends PostEvent {
+  @override
+  String toString() => 'Refresh Posts';
+}
