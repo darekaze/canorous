@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
- bool refresh = false;
 
 // TODO: Change to stateless?
 class HomeScreen extends StatefulWidget {
@@ -17,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  PlaylistBloc _playListBloc = PlaylistBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           )
         ),
-        _PlayList(),
+        _PlayList(
+          playlistBloc: AppProvider.getBloc(context).playlistBloc,
+        ),
         Container(
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
@@ -422,18 +422,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 class _PlayList extends StatefulWidget {
-  
+  final PlaylistBloc playlistBloc;
+
+  _PlayList({this.playlistBloc});
   @override
   _PlayListState createState() => _PlayListState();
 }
 
 class _PlayListState extends State<_PlayList> {
-  PlaylistBloc _playListBloc = PlaylistBloc();
   
   @override
   void initState() {
     super.initState();
-    _playListBloc.dispatch(LoadPlayLists());
+    widget.playlistBloc.dispatch(LoadPlayLists());
   }
 
 
@@ -443,7 +444,7 @@ class _PlayListState extends State<_PlayList> {
         margin: EdgeInsets.symmetric(vertical: 5.0),
         height: 210.0,
         child: BlocBuilder(
-          bloc: _playListBloc,
+          bloc: widget.playlistBloc,
           builder: (BuildContext context, PlaylistState state) {
             if (state is PlayListLoading) {
               return Center(
@@ -451,7 +452,7 @@ class _PlayListState extends State<_PlayList> {
               );
             } else if (state is PlayListLoaded) {
               if (state.playLists.length == 0) {
-                _playListBloc.dispatch(CreatePlayList(PlayList(title: "My PlayList", tracksTitle: [], tracksVideoId: [], tracksDuration: [])));
+                widget.playlistBloc.dispatch(CreatePlayList(PlayList(title: "My PlayList", tracksTitle: [], tracksVideoId: [], tracksDuration: [])));
               }
               return ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -475,7 +476,7 @@ class _PlayListState extends State<_PlayList> {
                               context: context,
                               barrierDismissible: false,
                               builder: (BuildContext context) {
-                                return _Tracks(playList: displayedPlayList);
+                                return _Tracks(playList: displayedPlayList, playlistBloc: widget.playlistBloc);
                               }
                             );
                           },
@@ -495,7 +496,7 @@ class _PlayListState extends State<_PlayList> {
                                         new FlatButton(
                                           child: Text('Confirm'),
                                           onPressed: () {
-                                            _playListBloc.dispatch(DeletePlayList(displayedPlayList));
+                                            widget.playlistBloc.dispatch(DeletePlayList(displayedPlayList));
                                             Navigator.of(context).pop();
                                           },
                                         ),
@@ -535,7 +536,7 @@ class _PlayListState extends State<_PlayList> {
                                         new FlatButton(
                                           child: Text('Confirm'),
                                           onPressed: () {
-                                            _playListBloc.dispatch(CreatePlayList(PlayList(title: textController.text, tracksTitle: [], tracksVideoId: [], tracksDuration: [])));
+                                            widget.playlistBloc.dispatch(CreatePlayList(PlayList(title: textController.text, tracksTitle: [], tracksVideoId: [], tracksDuration: [])));
                                             Navigator.of(context).pop();
                                           },
                                         ),
@@ -587,20 +588,20 @@ class _PlayListState extends State<_PlayList> {
 
 class _Tracks extends StatefulWidget {
   final PlayList playList;
+  final PlaylistBloc playlistBloc;
 
-  _Tracks({this.playList});
+  _Tracks({this.playList, this.playlistBloc});
   @override
   _TracksState createState() => _TracksState();
 }
 
 class _TracksState extends State<_Tracks> {
-  PlaylistBloc _playListBloc = PlaylistBloc();
 
   @override
   void initState() {
     super.initState();
     //_playListBloc.dispatch(CreatePlayList(demo));
-    _playListBloc.dispatch(LoadPlayLists());
+    widget.playlistBloc.dispatch(LoadPlayLists());
   }
 
   @override
@@ -619,7 +620,7 @@ class _TracksState extends State<_Tracks> {
                     trailing: IconButton(
                       icon: Icon(CupertinoIcons.delete),
                       onPressed: (){
-                        _playListBloc.dispatch(DeleteTrack(widget.playList, Track(title: widget.playList.tracksTitle[index], videoId: widget.playList.tracksVideoId[index], duration: widget.playList.tracksDuration[index])));
+                        widget.playlistBloc.dispatch(DeleteTrack(widget.playList, Track(title: widget.playList.tracksTitle[index], videoId: widget.playList.tracksVideoId[index], duration: widget.playList.tracksDuration[index])));
                         Navigator.of(context).pop();
                       },
                     ),

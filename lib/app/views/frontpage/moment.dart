@@ -21,7 +21,7 @@ class _MomentScreenState extends State<MomentScreen> {
 
   @override
   void initState() {
-    super.initState();;
+    super.initState();
     _scrollController.addListener(_onScroll);
     widget.postBloc.dispatch(FetchPosts());
   }
@@ -96,7 +96,7 @@ class PostWidget extends StatelessWidget {
       dense: true,
       onTap: () async {
         // ENHANCE: make logic in player bloc
-        AppProvider.getPlayer(context).playFromYT(post.videoId);
+        AppProvider.getPlayer(context).playFromYT(post.videoId, post.videoTitle);
       },
     );
   }

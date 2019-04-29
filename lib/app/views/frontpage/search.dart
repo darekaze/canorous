@@ -242,6 +242,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
                                     barrierDismissible: false,
                                     builder: (BuildContext context) {
                                         return _PlayList(
+                                          playlistBloc: AppProvider.getBloc(context).playlistBloc,
                                           track: Track(
                                             title: widget.item.title,
                                             videoId: widget.item.videoId,
@@ -297,13 +298,14 @@ class _SearchResultItemState extends State<_SearchResultItem>
 
 class _PlayList extends StatefulWidget {
   final Track track;
-  _PlayList({this.track});
+  final PlaylistBloc playlistBloc;
+
+  _PlayList({this.track, this.playlistBloc});
   @override
   _PlayListState createState() => _PlayListState();
 }
 
 class _PlayListState extends State<_PlayList> {
-  PlaylistBloc _playListBloc = PlaylistBloc();
   //static Track track_demo = Track(title: "title", videoId: "videoId", duration: 1);
   //PlayList demo = PlayList(title: "demo5", tracksTitle: [], tracksVideoId: [], tracksDuration: []);
   
@@ -311,7 +313,7 @@ class _PlayListState extends State<_PlayList> {
   void initState() {
     super.initState();
     //_playListBloc.dispatch(CreatePlayList(demo));
-    _playListBloc.dispatch(LoadPlayLists());
+    widget.playlistBloc.dispatch(LoadPlayLists());
   }
 
 
@@ -322,7 +324,7 @@ class _PlayListState extends State<_PlayList> {
         width: 400,
         height: 400,
         child: BlocBuilder(
-          bloc: _playListBloc,
+          bloc: widget.playlistBloc,
           builder: (BuildContext context, PlaylistState state) {
             if (state is PlayListLoading) {
               return Center(
@@ -339,7 +341,7 @@ class _PlayListState extends State<_PlayList> {
                     trailing: IconButton(
                       icon: Icon(CupertinoIcons.add),
                       onPressed: (){
-                        _playListBloc.dispatch(InsertTrack(displayedPlayList, widget.track));
+                        widget.playlistBloc.dispatch(InsertTrack(displayedPlayList, widget.track));
                         Navigator.of(context).pop();
                       },
                     ),
