@@ -1,4 +1,5 @@
 import 'package:canorous/app/bloc/playlist/bloc.dart';
+import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/data/model/PlayList.dart';
 import 'package:canorous/data/model/Track.dart';
 import 'package:flutter/cupertino.dart';
@@ -627,6 +628,13 @@ class _TracksState extends State<_Tracks> {
         )
       ),
       actions: <Widget>[
+        new FlatButton(
+          child: Text('Play'),
+          onPressed: () {
+            AppProvider.getPlayer(context).playList(widget.playList.tracksVideoId, widget.playList.tracksTitle);
+            Navigator.of(context).pop();
+          },
+        ),
         new FlatButton(
           child: Text('Cancel'),
           onPressed: () {

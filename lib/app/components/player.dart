@@ -26,8 +26,8 @@ class PlayerWidget extends StatefulWidget {
     playerState.playFromYT(videoId, name);
   }
 
-  void playList(list) {
-    playerState.playList(list);
+  void playList(List<String> videoId, List<String> name) {
+    playerState.playList(videoId, name);
   }
 }
 
@@ -36,8 +36,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   AudioPlayerState _audioPlayerState;
   Duration _duration;
   Duration _position;
-  List list;
-  int listPosition;
+  List<String> videoId;
+  List<String> name;
   String url = "http://www2.comp.polyu.edu.hk/~16097874d/test.mp3";
 
   Icon iconPlayorPause = Icon(Icons.play_arrow);
@@ -171,15 +171,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   Future playorpause() async {
     if (this.url != null){
-      if (!_isPlaying || _isPaused) {
-        final playPosition = (_position != null &&
-                _duration != null &&
-                _position.inMilliseconds > 0 &&
-                _position.inMilliseconds < _duration.inMilliseconds)
-            ? _position
-            : null;
-        await _audioPlayer.play(this.url,
-            isLocal: widget.isLocal, position: playPosition);
+      if (!_isPlaying) {
+        resume();
         setState(() {
           _playerState = PlayerState.playing;
           iconPlayorPause = new Icon(Icons.pause);
@@ -194,12 +187,23 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     }
   }
 
+  Future resume() async {
+    final playPosition = (_position != null &&
+                _duration != null &&
+                _position.inMilliseconds > 0 &&
+                _position.inMilliseconds < _duration.inMilliseconds)
+            ? _position
+            : null;
+    await _audioPlayer.play(this.url, isLocal: widget.isLocal, position: playPosition);
+    _audioPlayer.onPlayerCompletion.listen((onData){
+      listPlay();
+    });
+  }
+
   Future playNext() async {
-    if (list.isNotEmpty){
-      if (listPosition < list.length - 1){
-        list = list.sublist(listPosition);
-        playList(list);
-      }
+    if (videoId.length >= 1){
+      stop();
+      listPlay();
     }
   }
 
@@ -223,18 +227,23 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     });
   }
 
-  Future playList(list) async {
-    this.list = list;
-    if (this.list.isNotEmpty){
-      play(list[0], null);
-      listPosition = 0;
-      list.forEach((i) {
-        if (i > 0){
-          while(_playerState == _isPlaying) {}
-          play(list[i], null);
-          listPosition = i;
-        }
-      });
+  Future playList(List<String> videoId, List<String> name) async {
+    this.videoId = videoId;
+    this.name = name;
+    stop();
+    listPlay();
+  }
+
+  Future listPlay() async {
+    if (videoId.isNotEmpty && name.isNotEmpty) {
+        playFromYT(videoId[0], name[0]);
+        videoId.removeAt(0);
+        name.removeAt(0);
+        _audioPlayer.onPlayerCompletion.listen((onData){
+          if(videoId.isNotEmpty && name.isNotEmpty) {
+            listPlay();
+          }
+        });
     }
   }
 
