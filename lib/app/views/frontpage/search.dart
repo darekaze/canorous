@@ -3,8 +3,10 @@ import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/SearchResult.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
+import 'package:canorous/app/views/PostPage.dart';
 import 'package:canorous/data/dao/TrackDao.dart';
 import 'package:canorous/data/model/Track.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -227,7 +229,11 @@ class _SearchResultItemState extends State<_SearchResultItem>
                                 icon: Icon(Icons.share),
                                 color: Colors.greenAccent[400],
                                 onPressed: () {
-                                  // TODO: jump to share page
+                                  AppProvider.getRouter(context).navigateTo(
+                                    context,
+                                    PostPage.generatePath(widget.item.videoId, widget.item.title),
+                                    transition: TransitionType.inFromRight,
+                                  );
                                 },
                               ),
                               // ENHANCE: More buttons
