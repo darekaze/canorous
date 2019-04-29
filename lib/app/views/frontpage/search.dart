@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/SearchResult.dart';
+import 'package:canorous/app/bloc/bloc/bloc.dart';
 import 'package:canorous/app/bloc/playlist/bloc.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
@@ -195,12 +196,19 @@ class _SearchResultItemState extends State<_SearchResultItem>
         builder: (context, _) {
           return GestureDetector(
             onTap: () async {
-              TrackDao().insert(Track(
+              /*TrackDao().create(Track(
                 title: widget.item.title,
                 videoId: widget.item.videoId,
                 duration: widget.item.lengthSeconds,
               ));
-              print('Music added to track store: ${widget.item.videoId}');
+              print('Music added to track store: ${widget.item.videoId}');*/
+              AppProvider.getBloc(context).trackBloc.dispatch(CreateRecord(
+                Track(
+                  title: widget.item.title,
+                  videoId: widget.item.videoId,
+                  duration: widget.item.lengthSeconds,
+                )
+              ));
               AppProvider.getPlayer(context).playFromYT(widget.item.videoId, widget.item.title);
             },
             child: Card(

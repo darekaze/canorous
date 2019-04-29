@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:canorous/app/bloc/bloc/bloc.dart';
 import 'package:canorous/app/bloc/playlist/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/data/model/PlayList.dart';
@@ -88,7 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ],
-            )),
+            )
+        ),
         _PlayList(
           playlistBloc: AppProvider.getBloc(context).playlistBloc,
         ),
@@ -98,249 +100,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 border: Border(
                     bottom: BorderSide(color: Colors.grey[500], width: 0.5))),
             padding: EdgeInsets.only(top: 20, bottom: 5, left: 10, right: 10),
-            child: Text(
-              "Collection",
-              style: new TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            )),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 5.0),
-          height: 210.0,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: <Widget>[
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.red,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 1",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.blue,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 2",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.green,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 3",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.yellow,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 4",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.purple,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 5",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-            ],
-          ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Records",
+                  style:
+                      new TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                new IconButton(
+                  icon: Icon(CupertinoIcons.clear),
+                  color: CupertinoColors.activeGreen,
+                  iconSize: 30,
+                  onPressed: () {
+                    AppProvider.getBloc(context).trackBloc.dispatch(ClearRecords());
+                  },
+                ),
+              ],
+            )
         ),
-        Container(
-            alignment: Alignment.centerLeft,
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Colors.grey[500], width: 0.5))),
-            padding: EdgeInsets.only(top: 20, bottom: 5, left: 10, right: 10),
-            child: Text(
-              "Recent",
-              style: new TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            )),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 5.0),
-          height: 210.0,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: <Widget>[
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.red,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 1",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.blue,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 2",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.green,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 3",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.yellow,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 4",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Container(
-                    width: 180.0,
-                    color: Colors.purple,
-                    height: 180,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      height: 30,
-                      padding:
-                          EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
-                      child: Text(
-                        "List 5",
-                        style: new TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold),
-                      ))
-                ],
-              ),
-              Padding(padding: EdgeInsets.all(5.0)),
-            ],
-          ),
+        _Records(
+          trackBloc: AppProvider.getBloc(context).trackBloc,
         ),
         Container(height: 80)
       ]),
@@ -534,6 +314,7 @@ class _PlayListState extends State<_PlayList> {
                       Container(
                           alignment: Alignment.center,
                           height: 20,
+                          width: 180,
                           padding: EdgeInsets.only(
                               top: 5, bottom: 5, left: 5, right: 5),
                           child: Text(
@@ -618,6 +399,95 @@ class _TracksState extends State<_Tracks> {
           },
         ),
       ],
+    );
+  }
+}
+
+
+class _Records extends StatefulWidget {
+  final TrackBloc trackBloc;
+
+  _Records({this.trackBloc});
+
+  @override
+  __RecordsState createState() => __RecordsState();
+}
+
+class __RecordsState extends State<_Records> {
+  @override
+  void initState() {
+    super.initState();
+    //_playListBloc.dispatch(CreatePlayList(demo));
+    widget.trackBloc.dispatch(LoadTracks());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5.0),
+      height: 210.0,
+      child: BlocBuilder(
+        bloc: widget.trackBloc,
+        builder: (BuildContext context, TrackState state) {
+          if (state is TrackLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is TrackLoaded) {
+            return ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              itemCount: state.tracks.length,
+              itemBuilder: (context, index) {
+                final displayedTrack = state.tracks[index];
+                var image = CachedNetworkImageProvider(
+                    'https://i.ytimg.com/vi/${displayedTrack.videoId}/mqdefault.jpg' ??
+                          'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                return Container(
+                  padding: EdgeInsets.all(5),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      GestureDetector(
+                        child: Container(
+                          width: 180,
+                          height: 180,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            image: DecorationImage(
+                              image: image
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          AppProvider.getPlayer(context).playFromYT(displayedTrack.videoId, displayedTrack.title);
+                        },
+                      ),
+                      Container(
+                          alignment: Alignment.center,
+                          height: 20,
+                          width: 180,
+                          padding: EdgeInsets.only(
+                              top: 5, bottom: 5, left: 5, right: 5),
+                          child: Text(
+                            displayedTrack.title == null
+                                ? "Default"
+                                : displayedTrack.title,
+                            overflow: TextOverflow.ellipsis,
+                            style: new TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.bold),
+                          ))
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+        },
+      ),
     );
   }
 }
