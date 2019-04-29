@@ -451,7 +451,7 @@ class _PlayListState extends State<_PlayList> {
               );
             } else if (state is PlayListLoaded) {
               if (state.playLists.length == 0) {
-                _playListBloc.dispatch(CreatePlayList(PlayList(title: "default", tracksTitle: [], tracksVideoId: [], tracksDuration: [])));
+                _playListBloc.dispatch(CreatePlayList(PlayList(title: "My PlayList", tracksTitle: [], tracksVideoId: [], tracksDuration: [])));
               }
               return ListView.builder(
                 scrollDirection: Axis.horizontal,
