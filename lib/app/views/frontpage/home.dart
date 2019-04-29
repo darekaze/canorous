@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/app/bloc/playlist/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/data/model/PlayList.dart';
@@ -63,8 +64,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   new FlatButton(
                                     child: Text('Confirm'),
                                     onPressed: () {
-                                      AppProvider.getBloc(context).playlistBloc.dispatch(
-                                          CreatePlayList(PlayList(
+                                      AppProvider.getBloc(context)
+                                          .playlistBloc
+                                          .dispatch(CreatePlayList(PlayList(
                                               title: textController.text,
                                               tracksTitle: [],
                                               tracksVideoId: [],
@@ -387,65 +389,147 @@ class _PlayListState extends State<_PlayList> {
               itemCount: state.playLists.length,
               itemBuilder: (context, index) {
                 final displayedPlayList = state.playLists[index];
+                var image1 = CachedNetworkImageProvider(
+                    'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                var image2 = CachedNetworkImageProvider(
+                    'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                var image3 = CachedNetworkImageProvider(
+                    'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                var image4 = CachedNetworkImageProvider(
+                    'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                if (displayedPlayList.tracksVideoId.length > 0) {
+                  image1 = CachedNetworkImageProvider(
+                      'https://i.ytimg.com/vi/${displayedPlayList.tracksVideoId[0]}/mqdefault.jpg' ??
+                          'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                }
+                if (displayedPlayList.tracksVideoId.length > 1) {
+                  image2 = CachedNetworkImageProvider(
+                      'https://i.ytimg.com/vi/${displayedPlayList.tracksVideoId[1]}/mqdefault.jpg' ??
+                          'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                }
+                if (displayedPlayList.tracksVideoId.length > 2) {
+                  image3 = CachedNetworkImageProvider(
+                      'https://i.ytimg.com/vi/${displayedPlayList.tracksVideoId[2]}/mqdefault.jpg' ??
+                          'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                }
+                if (displayedPlayList.tracksVideoId.length > 3) {
+                  image4 = CachedNetworkImageProvider(
+                      'https://i.ytimg.com/vi/${displayedPlayList.tracksVideoId[3]}/mqdefault.jpg' ??
+                          'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                }
                 return Container(
                   padding: EdgeInsets.all(5),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       GestureDetector(
-                          child: Container(
-                            width: 180.0,
-                            color: Colors.green,
-                            height: 180,
+                        child: Container(
+                          width: 180,
+                          height: 180,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            )
                           ),
-                          onTap: () {
-                            showDialog<Null>(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return _Tracks(
-                                      playList: displayedPlayList,
-                                      playlistBloc: widget.playlistBloc);
-                                });
-                          },
-                          onLongPress: () {
-                            showDialog<Null>(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    content: Container(
-                                      child: Text("Are you sure to delete " +
-                                          (displayedPlayList.title == null
-                                              ? "Default"
-                                              : displayedPlayList.title)),
-                                    ),
-                                    actions: <Widget>[
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          new FlatButton(
-                                            child: Text('Confirm'),
-                                            onPressed: () {
-                                              widget.playlistBloc.dispatch(
-                                                  DeletePlayList(
-                                                      displayedPlayList));
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          new FlatButton(
-                                            child: Text('Cancel'),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
+                          child: Column(
+                            children: <Widget>[
+                              Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                        child: Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: image1,
+                                        ),
                                       ),
-                                    ],
-                                  );
-                                });
-                          },
+                                    )),
+                                    Expanded(child: Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: image2,
+                                        ),
+                                      ),
+                                    ))
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(child: Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: image3,
+                                        ),
+                                      ),
+                                    )),
+                                    Expanded(child: Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: image4,
+                                        ),
+                                      ),
+                                    ))
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          showDialog<Null>(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return _Tracks(
+                                    playList: displayedPlayList,
+                                    playlistBloc: widget.playlistBloc);
+                              });
+                        },
+                        onLongPress: () {
+                          showDialog<Null>(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Container(
+                                    child: Text("Are you sure to delete " +
+                                        (displayedPlayList.title == null
+                                            ? "Default"
+                                            : displayedPlayList.title)),
+                                  ),
+                                  actions: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        new FlatButton(
+                                          child: Text('Confirm'),
+                                          onPressed: () {
+                                            widget.playlistBloc.dispatch(
+                                                DeletePlayList(
+                                                    displayedPlayList));
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        new FlatButton(
+                                          child: Text('Cancel'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
                       ),
                       Container(
                           alignment: Alignment.center,
