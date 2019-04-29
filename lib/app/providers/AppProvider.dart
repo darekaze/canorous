@@ -1,3 +1,4 @@
+import 'package:canorous/app/bloc/AppBloc.dart';
 import 'package:canorous/app/components/player.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/config/application.dart';
@@ -24,6 +25,10 @@ class AppProvider extends InheritedWidget {
 
   static AppAPI getAPI(BuildContext context) {
     return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application.appAPI;
+  }
+
+  static AppBloc getBloc(BuildContext context) {
+    return (context.inheritFromWidgetOfExactType(AppProvider) as AppProvider).application.appBloc;
   }
 
   static PlayerWidget getPlayer(BuildContext context) {

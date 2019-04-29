@@ -1,4 +1,3 @@
-import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/Post.dart';
 import 'package:canorous/app/bloc/post/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
@@ -6,33 +5,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MomentScreen extends StatefulWidget {
-  final AppAPI appAPI;
+  final PostBloc postBloc;
 
   MomentScreen({
     Key key,
-    @required this.appAPI,
+    @required this.postBloc,
   }) : super(key: key);
 
   _MomentScreenState createState() => _MomentScreenState();
 }
 
 class _MomentScreenState extends State<MomentScreen> {
-  PostBloc _postBloc;
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
 
   @override
   void initState() {
-    super.initState();
-    _postBloc = PostBloc(appAPI: widget.appAPI);
+    super.initState();;
     _scrollController.addListener(_onScroll);
-    _postBloc.dispatch(FetchPosts());
+    widget.postBloc.dispatch(FetchPosts());
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
-    _postBloc.dispose();
     super.dispose();
   }
 
@@ -40,14 +36,14 @@ class _MomentScreenState extends State<MomentScreen> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      _postBloc.dispatch(FetchPosts());
+      widget.postBloc.dispatch(FetchPosts());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: _postBloc,
+      bloc: widget.postBloc,
       builder: (BuildContext context, PostState state) {
         if (state is PostUninitialized) {
           return Center(

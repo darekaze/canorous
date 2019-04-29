@@ -1,3 +1,4 @@
+import 'package:canorous/app/bloc/AppBloc.dart';
 import 'package:canorous/app/components/player.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/config/env.dart';
@@ -10,6 +11,7 @@ import 'package:fluro/fluro.dart';
 class Application {
   Router router;
   AppAPI appAPI;
+  AppBloc appBloc;
   PlayerWidget player; // ENHANCE: init player, not widget...
 
   Future<void> onCreate() async {
@@ -17,6 +19,7 @@ class Application {
     _initRouter();
     await _initDB();
     _initAppAPI();
+    _initAppBloc();
     _initPlayer();
   }
 
@@ -36,6 +39,10 @@ class Application {
 
   void _initAppAPI() {
     appAPI = AppAPI();
+  }
+
+  void _initAppBloc() {
+    appBloc = AppBloc(appAPI);
   }
 
   void _initPlayer() {

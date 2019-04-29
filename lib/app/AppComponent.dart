@@ -12,6 +12,7 @@ class AppComponent extends StatefulWidget {
     this._application, {
     Key key,
   }) : super(key: key);
+
   final Application _application;
 
   @override
@@ -37,8 +38,8 @@ class _AppComponentState extends State<AppComponent> {
     print('initial core.route = ${app.initialRoute}');
 
     return AppProvider(
-      child: app,
       application: widget._application,
+      child: app,
     );
   }
 
