@@ -206,7 +206,7 @@ class _SearchResultItemState extends State<_SearchResultItem>
         animation: animation,
         builder: (context, _) {
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               TrackDao().insert(Track(
                 title: widget.item.title,
                 videoId: widget.item.videoId,

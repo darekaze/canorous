@@ -1,6 +1,7 @@
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/Post.dart';
 import 'package:canorous/app/bloc/post/bloc.dart';
+import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -93,10 +94,14 @@ class PostWidget extends StatelessWidget {
         '${post.id}',
         style: TextStyle(fontSize: 10.0),
       ),
-      title: Text(post.title),
+      title: Text(post.username),
       isThreeLine: true,
-      subtitle: Text(post.body),
+      subtitle: Text(post.content),
       dense: true,
+      onTap: () async {
+        // ENHANCE: make logic in player bloc
+        AppProvider.getPlayer(context).playFromYT(post.videoId);
+      },
     );
   }
 }

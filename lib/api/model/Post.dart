@@ -6,13 +6,22 @@ part 'Post.g.dart';
 @JsonSerializable()
 class Post {
   final int id;
-  final String title;
-  final String body;
+  final String username;
+  final String content;
+  final String videoId;
+  final String videoTitle;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
 
   Post({
     this.id,
-    this.title,
-    this.body,
+    this.username,
+    this.content,
+    this.videoId,
+    this.videoTitle,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) =>

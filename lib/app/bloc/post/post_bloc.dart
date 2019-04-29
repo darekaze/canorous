@@ -27,7 +27,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       try {
         if (currentState is PostUninitialized) {
           final posts = await appAPI.fetchPosts(0, 20);
-          yield PostLoaded(posts: posts, hasReachedMax: false);
+          yield PostLoaded(posts: posts, hasReachedMax: posts.length < 20);
         } else if (currentState is PostLoaded) {
           final posts = await appAPI.fetchPosts(
               (currentState as PostLoaded).posts.length, 20);
@@ -38,6 +38,14 @@ class PostBloc extends Bloc<PostEvent, PostState> {
                   hasReachedMax: false,
                 );
         }
+      } catch (_) {
+        yield PostError();
+      }
+    } else if (event is RefreshPosts) {
+      yield PostUninitialized();
+      try {
+        final posts = await appAPI.fetchPosts(0, 20);
+        yield PostLoaded(posts: posts, hasReachedMax: posts.length < 20);
       } catch (_) {
         yield PostError();
       }

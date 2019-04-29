@@ -5,10 +5,8 @@ import 'package:dio/dio.dart';
 
 class CanorousProvider extends APIProvider {
   static const TAG = 'CanorousProvider';
-  static const _link = 'https://jsonplaceholder.typicode.com';
-  // Env.value.baseUrl
 
-  CanorousProvider() : super(TAG, _link);
+  CanorousProvider() : super(TAG, Env.value.baseUrl);
 
   // Canorous api calls here
 
