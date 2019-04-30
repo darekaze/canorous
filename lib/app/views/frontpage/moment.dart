@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/api/model/Post.dart';
 import 'package:canorous/app/bloc/bloc/bloc.dart';
 import 'package:canorous/app/bloc/post/bloc.dart';
@@ -90,14 +91,21 @@ class PostWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // ENHANCE: UI improvement
     return ListTile(
-      leading: Text(
-        '${post.id}',
-        style: TextStyle(fontSize: 10.0),
+      leading: SizedBox(
+        width: 90.0,
+        height: 90.0,
+        child: CachedNetworkImage(
+          imageUrl: 'https://i.ytimg.com/vi/${post.videoId}/mqdefault.jpg',
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+          fadeInDuration: Duration(seconds: 1),
+        ),
       ),
-      title: Text(post.username),
-      isThreeLine: true,
+      title: Text(
+        post.videoTitle,
+        overflow: TextOverflow.ellipsis,
+      ),
       subtitle: Text(post.content),
-      dense: true,
       onTap: () async {
         AppProvider.getBloc(context).trackBloc.dispatch(CreateRecord(Track(
               title: post.videoTitle,

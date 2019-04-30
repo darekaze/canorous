@@ -33,6 +33,7 @@ dependencies:
   shimmer: ^1.0.0
   timeago: ^2.0.13
   share: ^0.6.1
+  marquee: ^1.2.0
 
   # Helpers
   equatable: ^0.2.3

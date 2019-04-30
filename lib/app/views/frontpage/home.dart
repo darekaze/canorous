@@ -395,7 +395,7 @@ class _TracksState extends State<_Tracks> {
                                 videoId: widget.playList.tracksVideoId[index],
                                 duration:
                                     widget.playList.tracksDuration[index])));
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop(); // enhancement need
                       },
                     ),
                   ],

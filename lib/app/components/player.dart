@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
 import 'package:youtube_extractor/youtube_extractor.dart';
 
 enum PlayerState { stopped, playing, paused }
@@ -41,7 +42,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   String url;
 
   Icon iconPlayorPause = Icon(Icons.play_arrow);
-  Text musicName = Text("Music Name");
+  Widget musicName = Text("Music Name");
 
   PlayerState _playerState = PlayerState.stopped;
   StreamSubscription _durationSubscription;
@@ -222,10 +223,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     stop();
     await _audioPlayer.play(this.url, isLocal: widget.isLocal, position: null);
     setState(() {
-      musicName = Text(
-        name,
-        overflow: TextOverflow.ellipsis,
-      );
+      musicName = Marquee(text: name);
       _playerState = PlayerState.playing;
       iconPlayorPause = Icon(Icons.pause);
     });
