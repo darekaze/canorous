@@ -12,8 +12,9 @@ var postPageRouteHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     String videoId = params['videoId']?.first;
     String videoTitle = params['videoTitle']?.first;
+    String duration = params['duration']?.first;
 
-    return PostPage(videoId: videoId, videoTitle: videoTitle);
+    return PostPage(videoId: videoId, videoTitle: videoTitle, duration: int.parse(duration));
   });
 
 class Routes {

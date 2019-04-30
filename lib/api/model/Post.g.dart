@@ -13,6 +13,7 @@ Post _$PostFromJson(Map<String, dynamic> json) {
       content: json['content'] as String,
       videoId: json['videoId'] as String,
       videoTitle: json['videoTitle'] as String,
+      duration: json['duration'] as int,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -27,6 +28,7 @@ Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'content': instance.content,
       'videoId': instance.videoId,
       'videoTitle': instance.videoTitle,
+      'duration': instance.duration,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String()
     };

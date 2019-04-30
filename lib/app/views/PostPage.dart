@@ -11,17 +11,20 @@ class PostPage extends StatefulWidget {
 
   final String videoId;
   final String videoTitle;
+  final int duration;
 
   PostPage({
     this.videoId,
     this.videoTitle,
+    this.duration,
     Key key,
   }) : super(key: key);
 
-  static String generatePath(String videoId, String videoTitle) {
+  static String generatePath(String videoId, String videoTitle, int duration) {
     Map<String, dynamic> parma = {
       'videoId': videoId,
       'videoTitle': videoTitle,
+      'duration': duration.toString(),
     };
     Uri uri = Uri(path: PATH, queryParameters: parma);
     return uri.toString();
@@ -52,6 +55,7 @@ class _PostPageState extends State<PostPage> {
       content: _contentController.text,
       videoId: widget.videoId,
       videoTitle: widget.videoTitle,
+      duration: widget.duration,
     );
     _postSubmitBloc.dispatch(SubmitPost(post));
   }

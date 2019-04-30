@@ -9,6 +9,7 @@ class Post {
   final String content;
   final String videoId;
   final String videoTitle;
+  final int duration;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -19,6 +20,7 @@ class Post {
     this.content,
     this.videoId,
     this.videoTitle,
+    this.duration,
     this.createdAt,
     this.updatedAt,
   });

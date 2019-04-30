@@ -379,8 +379,10 @@ class _TracksState extends State<_Tracks> {
                         AppProvider.getRouter(context).navigateTo(
                           context,
                           PostPage.generatePath(
-                              widget.playList.tracksVideoId[index],
-                              widget.playList.tracksTitle[index]),
+                            widget.playList.tracksVideoId[index],
+                            widget.playList.tracksTitle[index],
+                            widget.playList.tracksDuration[index],
+                          ),
                           transition: TransitionType.inFromRight,
                         );
                       },

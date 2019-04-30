@@ -110,7 +110,7 @@ class PostWidget extends StatelessWidget {
         AppProvider.getBloc(context).trackBloc.dispatch(CreateRecord(Track(
               title: post.videoTitle,
               videoId: post.videoId,
-              duration: 120,
+              duration: post.duration ?? 120,
             )));
 
         AppProvider.getPlayer(context)

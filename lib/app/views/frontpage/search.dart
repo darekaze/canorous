@@ -262,7 +262,10 @@ class _SearchResultItemState extends State<_SearchResultItem>
                                   AppProvider.getRouter(context).navigateTo(
                                     context,
                                     PostPage.generatePath(
-                                        widget.item.videoId, widget.item.title),
+                                      widget.item.videoId,
+                                      widget.item.title,
+                                      widget.item.lengthSeconds,
+                                    ),
                                     transition: TransitionType.inFromRight,
                                   );
                                 },
