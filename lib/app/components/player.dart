@@ -38,7 +38,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   Duration _position;
   List<String> videoId;
   List<String> name;
-  String url = "http://www2.comp.polyu.edu.hk/~16097874d/test.mp3";
+  String url;
 
   Icon iconPlayorPause = Icon(Icons.play_arrow);
   Text musicName = Text("Music Name");
