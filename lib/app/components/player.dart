@@ -107,7 +107,11 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     ),
                   ],
                 ),
-                Container(padding: EdgeInsets.only(left: 15), width: 200, height: 20,child: musicName),
+                Container(
+                    padding: EdgeInsets.only(left: 15),
+                    width: 200,
+                    height: 20,
+                    child: musicName,),
               ],
             ),
             Row(
@@ -170,12 +174,12 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   }
 
   Future playorpause() async {
-    if (this.url != null){
+    if (this.url != null) {
       if (!_isPlaying) {
         resume();
         setState(() {
           _playerState = PlayerState.playing;
-          iconPlayorPause = new Icon(Icons.pause);
+          iconPlayorPause = Icon(Icons.pause);
         });
       } else {
         await _audioPlayer.pause();
@@ -189,19 +193,20 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   Future resume() async {
     final playPosition = (_position != null &&
-                _duration != null &&
-                _position.inMilliseconds > 0 &&
-                _position.inMilliseconds < _duration.inMilliseconds)
-            ? _position
-            : null;
-    await _audioPlayer.play(this.url, isLocal: widget.isLocal, position: playPosition);
-    _audioPlayer.onPlayerCompletion.listen((onData){
+            _duration != null &&
+            _position.inMilliseconds > 0 &&
+            _position.inMilliseconds < _duration.inMilliseconds)
+        ? _position
+        : null;
+    await _audioPlayer.play(this.url,
+        isLocal: widget.isLocal, position: playPosition);
+    _audioPlayer.onPlayerCompletion.listen((onData) {
       listPlay();
     });
   }
 
   Future playNext() async {
-    if (videoId.length >= 1){
+    if (videoId.length >= 1) {
       stop();
       listPlay();
     }
@@ -215,8 +220,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   Future play(String url, String name) async {
     this.url = url;
     stop();
-    await _audioPlayer.play(this.url,
-        isLocal: widget.isLocal, position: null);
+    await _audioPlayer.play(this.url, isLocal: widget.isLocal, position: null);
     setState(() {
       musicName = Text(
         name,
@@ -236,14 +240,14 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   Future listPlay() async {
     if (videoId.isNotEmpty && name.isNotEmpty) {
-        playFromYT(videoId[0], name[0]);
-        videoId.removeAt(0);
-        name.removeAt(0);
-        _audioPlayer.onPlayerCompletion.listen((onData){
-          if(videoId.isNotEmpty && name.isNotEmpty) {
-            listPlay();
-          }
-        });
+      playFromYT(videoId[0], name[0]);
+      videoId.removeAt(0);
+      name.removeAt(0);
+      _audioPlayer.onPlayerCompletion.listen((onData) {
+        if (videoId.isNotEmpty && name.isNotEmpty) {
+          listPlay();
+        }
+      });
     }
   }
 

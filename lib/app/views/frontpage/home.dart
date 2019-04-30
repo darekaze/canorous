@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// TODO: Change to stateless?
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
 
@@ -35,13 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Text(
                   "PlayLists",
-                  style:
-                      new TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   icon: Icon(CupertinoIcons.add),
                   iconSize: 30,
-                  color: CupertinoColors.activeGreen,
+                  color: Colors.red[500],
                   onPressed: () {
                     TextEditingController textController =
                         TextEditingController();
@@ -64,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  new FlatButton(
+                                  FlatButton(
                                     child: Text('Confirm'),
                                     onPressed: () {
                                       AppProvider.getBloc(context)
@@ -77,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Navigator.of(context).pop();
                                     },
                                   ),
-                                  new FlatButton(
+                                  FlatButton(
                                     child: Text('Cancel'),
                                     onPressed: () {
                                       Navigator.of(context).pop();
@@ -91,8 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ],
-            )
-        ),
+            )),
         _PlayList(
           playlistBloc: AppProvider.getBloc(context).playlistBloc,
         ),
@@ -107,20 +104,20 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Text(
                   "Records",
-                  style:
-                      new TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
-                new IconButton(
+                IconButton(
                   icon: Icon(CupertinoIcons.clear),
-                  color: CupertinoColors.activeGreen,
+                  color: Colors.red[500],
                   iconSize: 30,
                   onPressed: () {
-                    AppProvider.getBloc(context).trackBloc.dispatch(ClearRecords());
+                    AppProvider.getBloc(context)
+                        .trackBloc
+                        .dispatch(ClearRecords());
                   },
                 ),
               ],
-            )
-        ),
+            )),
         _Records(
           trackBloc: AppProvider.getBloc(context).trackBloc,
         ),
@@ -149,7 +146,7 @@ class _PlayListState extends State<_PlayList> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5.0),
-      height: 220.0,
+      height: 230.0,
       child: BlocBuilder(
         bloc: widget.playlistBloc,
         builder: (BuildContext context, PlaylistState state) {
@@ -222,36 +219,42 @@ class _PlayListState extends State<_PlayList> {
                                         ),
                                       ),
                                     )),
-                                    Expanded(child: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: image2,
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: image2,
+                                          ),
                                         ),
                                       ),
-                                    ))
+                                    ),
                                   ],
                                 ),
                               ),
                               Expanded(
                                 child: Row(
                                   children: <Widget>[
-                                    Expanded(child: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: image3,
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: image3,
+                                          ),
                                         ),
                                       ),
-                                    )),
-                                    Expanded(child: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: image4,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: image4,
+                                          ),
                                         ),
                                       ),
-                                    ))
+                                    ),
                                   ],
                                 ),
                               ),
@@ -285,7 +288,7 @@ class _PlayListState extends State<_PlayList> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
-                                        new FlatButton(
+                                        FlatButton(
                                           child: Text('Confirm'),
                                           onPressed: () {
                                             widget.playlistBloc.dispatch(
@@ -294,7 +297,7 @@ class _PlayListState extends State<_PlayList> {
                                             Navigator.of(context).pop();
                                           },
                                         ),
-                                        new FlatButton(
+                                        FlatButton(
                                           child: Text('Cancel'),
                                           onPressed: () {
                                             Navigator.of(context).pop();
@@ -309,7 +312,7 @@ class _PlayListState extends State<_PlayList> {
                       ),
                       Container(
                           alignment: Alignment.center,
-                          height: 30,
+                          height: 40,
                           width: 180,
                           padding: EdgeInsets.only(
                               top: 5, bottom: 5, left: 5, right: 5),
@@ -318,8 +321,7 @@ class _PlayListState extends State<_PlayList> {
                                 ? "Default"
                                 : displayedPlayList.title,
                             overflow: TextOverflow.ellipsis,
-                            style: new TextStyle(
-                                fontSize: 18),
+                            style: TextStyle(fontSize: 14.0),
                           ))
                     ],
                   ),
@@ -343,11 +345,9 @@ class _Tracks extends StatefulWidget {
 }
 
 class _TracksState extends State<_Tracks> {
-  IconData share = const IconData(
-    0xf473, 
-    fontFamily: CupertinoIcons.iconFont, 
-    fontPackage: CupertinoIcons.iconFontPackage
-  );
+  IconData share = const IconData(0xf473,
+      fontFamily: CupertinoIcons.iconFont,
+      fontPackage: CupertinoIcons.iconFontPackage);
 
   @override
   void initState() {
@@ -378,7 +378,9 @@ class _TracksState extends State<_Tracks> {
                       onPressed: () {
                         AppProvider.getRouter(context).navigateTo(
                           context,
-                          PostPage.generatePath(widget.playList.tracksVideoId[index], widget.playList.tracksTitle[index]),
+                          PostPage.generatePath(
+                              widget.playList.tracksVideoId[index],
+                              widget.playList.tracksTitle[index]),
                           transition: TransitionType.inFromRight,
                         );
                       },
@@ -391,7 +393,8 @@ class _TracksState extends State<_Tracks> {
                             Track(
                                 title: widget.playList.tracksTitle[index],
                                 videoId: widget.playList.tracksVideoId[index],
-                                duration: widget.playList.tracksDuration[index])));
+                                duration:
+                                    widget.playList.tracksDuration[index])));
                         Navigator.of(context).pop();
                       },
                     ),
@@ -401,7 +404,7 @@ class _TracksState extends State<_Tracks> {
             },
           )),
       actions: <Widget>[
-        new FlatButton(
+        FlatButton(
           child: Text('Play'),
           onPressed: () {
             AppProvider.getPlayer(context).playList(
@@ -409,7 +412,7 @@ class _TracksState extends State<_Tracks> {
             Navigator.of(context).pop();
           },
         ),
-        new FlatButton(
+        FlatButton(
           child: Text('Cancel'),
           onPressed: () {
             Navigator.of(context).pop();
@@ -419,7 +422,6 @@ class _TracksState extends State<_Tracks> {
     );
   }
 }
-
 
 class _Records extends StatefulWidget {
   final TrackBloc trackBloc;
@@ -442,7 +444,7 @@ class __RecordsState extends State<_Records> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5.0),
-      height: 220.0,
+      height: 230.0,
       child: BlocBuilder(
         bloc: widget.trackBloc,
         builder: (BuildContext context, TrackState state) {
@@ -459,7 +461,7 @@ class __RecordsState extends State<_Records> {
                 final displayedTrack = state.tracks[index];
                 var image = CachedNetworkImageProvider(
                     'https://i.ytimg.com/vi/${displayedTrack.videoId}/mqdefault.jpg' ??
-                          'http://www2.comp.polyu.edu.hk/~16097874d/default.jng');
+                        'http://www2.comp.polyu.edu.hk/~16097874d/default.jng');
                 return Container(
                   padding: EdgeInsets.all(5),
                   child: Column(
@@ -470,19 +472,17 @@ class __RecordsState extends State<_Records> {
                           width: 180,
                           height: 180,
                           decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: image
-                            ),
-                          ),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover, image: image)),
                         ),
                         onTap: () {
-                          AppProvider.getPlayer(context).playFromYT(displayedTrack.videoId, displayedTrack.title);
+                          AppProvider.getPlayer(context).playFromYT(
+                              displayedTrack.videoId, displayedTrack.title);
                         },
                       ),
                       Container(
                           alignment: Alignment.center,
-                          height: 30,
+                          height: 40,
                           width: 180,
                           padding: EdgeInsets.only(
                               top: 5, bottom: 5, left: 5, right: 5),
@@ -491,8 +491,7 @@ class __RecordsState extends State<_Records> {
                                 ? "Default"
                                 : displayedTrack.title,
                             overflow: TextOverflow.ellipsis,
-                            style: new TextStyle(
-                                fontSize: 18),
+                            style: TextStyle(fontSize: 14.0),
                           ))
                     ],
                   ),

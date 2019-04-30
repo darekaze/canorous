@@ -1,6 +1,9 @@
 import 'package:canorous/api/model/Post.dart';
+import 'package:canorous/app/bloc/bloc/bloc.dart';
 import 'package:canorous/app/bloc/post/bloc.dart';
+import 'package:canorous/app/components/BottomLoader.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
+import 'package:canorous/data/model/Track.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -56,10 +59,9 @@ class _MomentScreenState extends State<MomentScreen> {
             child: Text('Failed to fetch posts'),
           );
         } else if (state is PostLoaded) {
-          // TODO: futher change based on search.dart
           if (state.posts.isEmpty) {
             return Center(
-              child: Text('no posts'),
+              child: Text('No posts'),
             );
           }
           return ListView.builder(
@@ -86,7 +88,7 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Change the ui
+    // ENHANCE: UI improvement
     return ListTile(
       leading: Text(
         '${post.id}',
@@ -97,27 +99,15 @@ class PostWidget extends StatelessWidget {
       subtitle: Text(post.content),
       dense: true,
       onTap: () async {
-        // ENHANCE: make logic in player bloc
-        AppProvider.getPlayer(context).playFromYT(post.videoId, post.videoTitle);
-      },
-    );
-  }
-}
+        AppProvider.getBloc(context).trackBloc.dispatch(CreateRecord(Track(
+              title: post.videoTitle,
+              videoId: post.videoId,
+              duration: 120,
+            )));
 
-class BottomLoader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Center(
-        child: SizedBox(
-          width: 33,
-          height: 33,
-          child: CircularProgressIndicator(
-            strokeWidth: 1.5,
-          ),
-        ),
-      ),
+        AppProvider.getPlayer(context)
+            .playFromYT(post.videoId, post.videoTitle);
+      },
     );
   }
 }

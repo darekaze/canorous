@@ -1,6 +1,7 @@
 import 'package:canorous/api/model/Post.dart';
 import 'package:canorous/app/bloc/post/bloc.dart';
 import 'package:canorous/app/bloc/post_submit/bloc.dart';
+import 'package:canorous/app/components/BottomLoader.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,8 +96,9 @@ class _PostPageState extends State<PostPage> {
                   ),
                   // Music title and picture
                   Container(
+                    padding: EdgeInsets.only(top: 16.0),
                     child: state is PostSubmitLoading
-                        ? CircularProgressIndicator()
+                        ? BottomLoader()
                         : null,
                   ),
                 ],
