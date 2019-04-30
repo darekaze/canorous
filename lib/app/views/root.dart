@@ -15,6 +15,21 @@ class Root extends StatefulWidget {
 
 class _RootState extends State<Root> {
   int _currentIndex = 0;
+  IconData moment = const IconData(
+    0xf37c, 
+    fontFamily: CupertinoIcons.iconFont, 
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
+  IconData search = const IconData(
+    0xf4a4, 
+    fontFamily: CupertinoIcons.iconFont, 
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
+  IconData home = const IconData(
+    0xf448, 
+    fontFamily: CupertinoIcons.iconFont, 
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
 
   Widget _buildTabContent() {
     return IndexedStack(
@@ -35,15 +50,15 @@ class _RootState extends State<Root> {
       iconSize: 24.0,
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+          icon: Icon(home),
           title: Text('Home', style: TextStyle(fontSize: 11)),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
+          icon: Icon(search),
           title: Text('Search', style: TextStyle(fontSize: 11)),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.camera),
+          icon: Icon(moment),
           title: Text('Moment', style: TextStyle(fontSize: 11)),
         ),
       ],

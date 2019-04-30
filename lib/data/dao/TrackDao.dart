@@ -12,8 +12,37 @@ class TrackDao {
   // TODO: inplement Track logic here
 
   // Sample: insert a track
-  Future insert(Track track) async {
-    // TODO: avoid repetition insertion
+  Future create(Track track) async {
+    delete(track);
     await _trackStore.add(await _db, track.toJson());
+  }
+
+  Future delete(Track track) async {
+    final finder = Finder(filter: Filter.byKey(track.id));
+    await _trackStore.delete(
+      await _db,
+      finder: finder,
+    );
+  }
+
+  Future clear() async {
+    await _trackStore.delete(
+      await _db,
+    );
+  }
+
+  Future <List<Track>> getAllStoredByName() async {
+    final finder = Finder(sortOrders: [
+      SortOrder('id'),
+    ]);
+    final recordSnapshots = await _trackStore.find(
+      await _db,
+      finder: finder,
+    );
+    return recordSnapshots.map((snapshot) {
+      final track = Track.fromJson(snapshot.value);
+      track.id = snapshot.key;
+      return track;
+    }).toList();  
   }
 }

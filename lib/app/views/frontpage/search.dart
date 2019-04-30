@@ -1,14 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/api/AppAPI.dart';
 import 'package:canorous/api/model/SearchResult.dart';
+import 'package:canorous/app/bloc/bloc/bloc.dart';
+import 'package:canorous/app/bloc/playlist/bloc.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
 import 'package:canorous/app/views/PostPage.dart';
 import 'package:canorous/data/dao/TrackDao.dart';
+import 'package:canorous/data/model/PlayList.dart';
 import 'package:canorous/data/model/Track.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/cupertino.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({ Key key }) : super(key: key);
@@ -147,6 +151,11 @@ class _SearchResultItemState extends State<_SearchResultItem>
     with TickerProviderStateMixin {
   AnimationController controller;
   Animation animation;
+  IconData share = const IconData(
+    0xf473, 
+    fontFamily: CupertinoIcons.iconFont, 
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
 
   @override
   void initState() {
@@ -183,18 +192,26 @@ class _SearchResultItemState extends State<_SearchResultItem>
     image.resolve(ImageConfiguration()).addListener((imageInfo, syncCall) {
       if (mounted) controller.forward();
     });
+
     return AnimatedBuilder(
         animation: animation,
         builder: (context, _) {
           return GestureDetector(
             onTap: () async {
-              TrackDao().insert(Track(
+              /*TrackDao().create(Track(
                 title: widget.item.title,
                 videoId: widget.item.videoId,
                 duration: widget.item.lengthSeconds,
               ));
-              print('Music added to track store: ${widget.item.videoId}');
-              AppProvider.getPlayer(context).playFromYT(widget.item.videoId);
+              print('Music added to track store: ${widget.item.videoId}');*/
+              AppProvider.getBloc(context).trackBloc.dispatch(CreateRecord(
+                Track(
+                  title: widget.item.title,
+                  videoId: widget.item.videoId,
+                  duration: widget.item.lengthSeconds,
+                )
+              ));
+              AppProvider.getPlayer(context).playFromYT(widget.item.videoId, widget.item.title);
             },
             child: Card(
               color: Colors.transparent,
@@ -226,8 +243,30 @@ class _SearchResultItemState extends State<_SearchResultItem>
                           Row(
                             children: <Widget>[
                               IconButton(
-                                icon: Icon(Icons.share),
-                                color: Colors.greenAccent[400],
+                                iconSize: 24,
+                                icon: Icon(CupertinoIcons.bookmark),
+                                color: CupertinoColors.activeGreen,
+                                onPressed: () {
+                                  showDialog<Null>(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                        return _PlayList(
+                                          playlistBloc: AppProvider.getBloc(context).playlistBloc,
+                                          track: Track(
+                                            title: widget.item.title,
+                                            videoId: widget.item.videoId,
+                                            duration: widget.item.lengthSeconds,
+                                          )
+                                        );
+                                    },
+                                  ).then((val) {});
+                                },
+                              ),
+                              IconButton(
+                                iconSize: 30,
+                                icon: Icon(share),
+                                color: CupertinoColors.activeGreen,
                                 onPressed: () {
                                   AppProvider.getRouter(context).navigateTo(
                                     context,
@@ -267,5 +306,74 @@ class _SearchResultItemState extends State<_SearchResultItem>
             ),
           );
         });
+  }
+}
+
+
+class _PlayList extends StatefulWidget {
+  final Track track;
+  final PlaylistBloc playlistBloc;
+
+  _PlayList({this.track, this.playlistBloc});
+  @override
+  _PlayListState createState() => _PlayListState();
+}
+
+class _PlayListState extends State<_PlayList> {
+  //static Track track_demo = Track(title: "title", videoId: "videoId", duration: 1);
+  //PlayList demo = PlayList(title: "demo5", tracksTitle: [], tracksVideoId: [], tracksDuration: []);
+  
+  @override
+  void initState() {
+    super.initState();
+    //_playListBloc.dispatch(CreatePlayList(demo));
+    widget.playlistBloc.dispatch(LoadPlayLists());
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Container(
+        width: 400,
+        height: 400,
+        child: BlocBuilder(
+          bloc: widget.playlistBloc,
+          builder: (BuildContext context, PlaylistState state) {
+            if (state is PlayListLoading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is PlayListLoaded) {
+              return ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: state.playLists.length,
+                itemBuilder: (context, index) {
+                  final displayedPlayList = state.playLists[index];
+                  return ListTile(
+                    title: Text(displayedPlayList.title == null ? "Default" : displayedPlayList.title),
+                    trailing: IconButton(
+                      icon: Icon(CupertinoIcons.add),
+                      onPressed: (){
+                        widget.playlistBloc.dispatch(InsertTrack(displayedPlayList, widget.track));
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        ),
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          child: Text('Cancel'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
   }
 }
