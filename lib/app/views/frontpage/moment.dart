@@ -19,11 +19,13 @@ class _MomentScreenState extends State<MomentScreen> {
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
 
+  PostBloc get _receiveBloc => widget.postBloc;
+
   @override
   void initState() {
     super.initState();;
     _scrollController.addListener(_onScroll);
-    widget.postBloc.dispatch(FetchPosts());
+    _receiveBloc.dispatch(FetchPosts());
   }
 
   @override
@@ -36,14 +38,14 @@ class _MomentScreenState extends State<MomentScreen> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      widget.postBloc.dispatch(FetchPosts());
+      _receiveBloc.dispatch(FetchPosts());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder(
-      bloc: widget.postBloc,
+      bloc: _receiveBloc,
       builder: (BuildContext context, PostState state) {
         if (state is PostUninitialized) {
           return Center(

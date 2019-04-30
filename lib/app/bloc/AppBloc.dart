@@ -12,8 +12,8 @@ class AppBloc {
 
   AppBloc(this.appAPI) {
     _searchBloc = SearchBloc(appAPI: appAPI);
-    _postBloc = PostBloc(appAPI: appAPI);
     _postSubmitBloc = PostSubmitBloc(appAPI: appAPI);
+    _postBloc = PostBloc(appAPI: appAPI);
   }
 
   SearchBloc get searchBloc => _searchBloc;
