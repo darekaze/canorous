@@ -1,4 +1,3 @@
-import 'package:canorous/data/model/Track.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'PlayList.g.dart';

@@ -9,7 +9,7 @@ class TrackDao {
 
   Future<Database> get _db async => await AppDatabase.instance.database;
 
-  // TODO: inplement Track logic here
+  // Track logic here
 
   // Sample: insert a track
   Future create(Track track) async {
@@ -43,6 +43,6 @@ class TrackDao {
       final track = Track.fromJson(snapshot.value);
       track.id = snapshot.key;
       return track;
-    }).toList();  
+    }).toList();
   }
 }

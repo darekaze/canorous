@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'Post.g.dart';
 
-// TODO: change base on the real api
 @JsonSerializable()
 class Post {
   final int id;
