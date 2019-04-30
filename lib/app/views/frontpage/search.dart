@@ -268,7 +268,6 @@ class _SearchResultItemState extends State<_SearchResultItem>
                                 icon: Icon(share),
                                 color: CupertinoColors.activeGreen,
                                 onPressed: () {
-                                  
                                   AppProvider.getRouter(context).navigateTo(
                                     context,
                                     PostPage.generatePath(widget.item.videoId, widget.item.title),
