@@ -147,7 +147,7 @@ class _PlayListState extends State<_PlayList> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5.0),
-      height: 210.0,
+      height: 220.0,
       child: BlocBuilder(
         bloc: widget.playlistBloc,
         builder: (BuildContext context, PlaylistState state) {
@@ -313,7 +313,7 @@ class _PlayListState extends State<_PlayList> {
                       ),
                       Container(
                           alignment: Alignment.center,
-                          height: 20,
+                          height: 30,
                           width: 180,
                           padding: EdgeInsets.only(
                               top: 5, bottom: 5, left: 5, right: 5),
@@ -323,7 +323,7 @@ class _PlayListState extends State<_PlayList> {
                                 : displayedPlayList.title,
                             overflow: TextOverflow.ellipsis,
                             style: new TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.bold),
+                                fontSize: 18),
                           ))
                     ],
                   ),
@@ -425,7 +425,7 @@ class __RecordsState extends State<_Records> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5.0),
-      height: 210.0,
+      height: 220.0,
       child: BlocBuilder(
         bloc: widget.trackBloc,
         builder: (BuildContext context, TrackState state) {
@@ -458,6 +458,7 @@ class __RecordsState extends State<_Records> {
                               width: 1,
                             ),
                             image: DecorationImage(
+                              fit: BoxFit.cover,
                               image: image
                             ),
                           ),
@@ -468,7 +469,7 @@ class __RecordsState extends State<_Records> {
                       ),
                       Container(
                           alignment: Alignment.center,
-                          height: 20,
+                          height: 30,
                           width: 180,
                           padding: EdgeInsets.only(
                               top: 5, bottom: 5, left: 5, right: 5),
@@ -478,7 +479,7 @@ class __RecordsState extends State<_Records> {
                                 : displayedTrack.title,
                             overflow: TextOverflow.ellipsis,
                             style: new TextStyle(
-                                fontSize: 10, fontWeight: FontWeight.bold),
+                                fontSize: 18),
                           ))
                     ],
                   ),
