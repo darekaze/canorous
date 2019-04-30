@@ -78,7 +78,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     return Container(
         padding: EdgeInsets.only(top: 5, bottom: 5, left: 20, right: 5),
         decoration: BoxDecoration(
-          color: Colors.grey[400].withOpacity(0.93),
+          color: Colors.grey[200].withOpacity(0.93),
           border: Border(
               top: BorderSide(color: Colors.grey[500], width: 0.5),
               bottom: BorderSide(color: Colors.grey[500], width: 0.5)),
