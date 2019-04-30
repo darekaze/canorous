@@ -8,7 +8,7 @@ var rootHandler = Handler(
     return Root();
   });
 
-var appDetailRouteHandler = Handler(
+var postPageRouteHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     String videoId = params['videoId']?.first;
     String videoTitle = params['videoTitle']?.first;
@@ -23,6 +23,6 @@ class Routes {
         print('ERROR: Route not found!!');
       });
     router.define(Root.PATH, handler: rootHandler);
-    router.define(PostPage.PATH, handler: appDetailRouteHandler);
+    router.define(PostPage.PATH, handler: postPageRouteHandler);
   }
 }
