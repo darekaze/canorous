@@ -5,9 +5,11 @@ import 'package:canorous/app/bloc/bloc/bloc.dart';
 import 'package:canorous/app/bloc/playlist/bloc.dart';
 import 'package:canorous/app/bloc/search/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
+import 'package:canorous/app/views/PostPage.dart';
 import 'package:canorous/data/dao/TrackDao.dart';
 import 'package:canorous/data/model/PlayList.dart';
 import 'package:canorous/data/model/Track.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -267,6 +269,11 @@ class _SearchResultItemState extends State<_SearchResultItem>
                                 color: CupertinoColors.activeGreen,
                                 onPressed: () {
                                   
+                                  AppProvider.getRouter(context).navigateTo(
+                                    context,
+                                    PostPage.generatePath(widget.item.videoId, widget.item.title),
+                                    transition: TransitionType.inFromRight,
+                                  );
                                 },
                               ),
                               // ENHANCE: More buttons

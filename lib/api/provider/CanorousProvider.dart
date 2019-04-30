@@ -31,10 +31,13 @@ class CanorousProvider extends APIProvider {
 
   Future submitPost(Post post) async {
     const _SUBMIT_POST_API = '/posts';
+
+    final data = post.toJson();
+    data.removeWhere((key, value) => value == null);
     try {
       final Response response = await dio.post(
         _SUBMIT_POST_API,
-        data: post.toJson(),
+        data: data,
       );
       return Post.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
