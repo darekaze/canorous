@@ -16,3 +16,8 @@ class SubmitPost extends PostSubmitEvent {
   @override
   String toString() => 'PostSubmit({post: $post})';
 }
+
+class ResetSubmitForm extends PostSubmitEvent {
+  @override
+  String toString() => 'ResetSubmitForm';
+}

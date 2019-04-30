@@ -25,6 +25,8 @@ class PostSubmitBloc extends Bloc<PostSubmitEvent, PostSubmitState> {
       } catch(_) {
         yield PostSubmitError();
       }
+    } else if (event is ResetSubmitForm && currentState is PostSubmitSuccess) {
+      yield initialState;
     }
   }
 }
