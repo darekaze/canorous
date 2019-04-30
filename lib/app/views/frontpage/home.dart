@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:canorous/app/bloc/bloc/bloc.dart';
 import 'package:canorous/app/bloc/playlist/bloc.dart';
 import 'package:canorous/app/providers/AppProvider.dart';
+import 'package:canorous/app/views/PostPage.dart';
 import 'package:canorous/data/model/PlayList.dart';
 import 'package:canorous/data/model/Track.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -341,6 +343,12 @@ class _Tracks extends StatefulWidget {
 }
 
 class _TracksState extends State<_Tracks> {
+  IconData share = const IconData(
+    0xf473, 
+    fontFamily: CupertinoIcons.iconFont, 
+    fontPackage: CupertinoIcons.iconFontPackage
+  );
+
   @override
   void initState() {
     super.initState();
@@ -362,17 +370,32 @@ class _TracksState extends State<_Tracks> {
               return ListTile(
                 title:
                     Text(displayedTrack == null ? "Default" : displayedTrack),
-                trailing: IconButton(
-                  icon: Icon(CupertinoIcons.delete),
-                  onPressed: () {
-                    widget.playlistBloc.dispatch(DeleteTrack(
-                        widget.playList,
-                        Track(
-                            title: widget.playList.tracksTitle[index],
-                            videoId: widget.playList.tracksVideoId[index],
-                            duration: widget.playList.tracksDuration[index])));
-                    Navigator.of(context).pop();
-                  },
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(share),
+                      onPressed: () {
+                        AppProvider.getRouter(context).navigateTo(
+                          context,
+                          PostPage.generatePath(widget.playList.tracksVideoId[index], widget.playList.tracksTitle[index]),
+                          transition: TransitionType.inFromRight,
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(CupertinoIcons.delete),
+                      onPressed: () {
+                        widget.playlistBloc.dispatch(DeleteTrack(
+                            widget.playList,
+                            Track(
+                                title: widget.playList.tracksTitle[index],
+                                videoId: widget.playList.tracksVideoId[index],
+                                duration: widget.playList.tracksDuration[index])));
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
                 ),
               );
             },
