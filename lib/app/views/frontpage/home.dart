@@ -170,27 +170,27 @@ class _PlayListState extends State<_PlayList> {
               itemBuilder: (context, index) {
                 final displayedPlayList = state.playLists[index];
                 var image1 = CachedNetworkImageProvider(
-                    'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                    'http://www2.comp.polyu.edu.hk/~16097874d/default.jpg');
                 var image2 = CachedNetworkImageProvider(
-                    'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                    'http://www2.comp.polyu.edu.hk/~16097874d/default.jpg');
                 var image3 = CachedNetworkImageProvider(
-                    'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                    'http://www2.comp.polyu.edu.hk/~16097874d/default.jpg');
                 var image4 = CachedNetworkImageProvider(
-                    'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                    'http://www2.comp.polyu.edu.hk/~16097874d/default.jpg');
                 if (displayedPlayList.tracksVideoId.length > 0) {
                   image1 = CachedNetworkImageProvider(
                       'https://i.ytimg.com/vi/${displayedPlayList.tracksVideoId[0]}/mqdefault.jpg' ??
-                          'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                          'http://www2.comp.polyu.edu.hk/~16097874d/default.jpg');
                 }
                 if (displayedPlayList.tracksVideoId.length > 1) {
                   image2 = CachedNetworkImageProvider(
                       'https://i.ytimg.com/vi/${displayedPlayList.tracksVideoId[1]}/mqdefault.jpg' ??
-                          'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                          'http://www2.comp.polyu.edu.hk/~16097874d/default.jpg');
                 }
                 if (displayedPlayList.tracksVideoId.length > 2) {
                   image3 = CachedNetworkImageProvider(
                       'https://i.ytimg.com/vi/${displayedPlayList.tracksVideoId[2]}/mqdefault.jpg' ??
-                          'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                          'http://www2.comp.polyu.edu.hk/~16097874d/default.jpg');
                 }
                 if (displayedPlayList.tracksVideoId.length > 3) {
                   image4 = CachedNetworkImageProvider(
@@ -206,12 +206,6 @@ class _PlayListState extends State<_PlayList> {
                         child: Container(
                           width: 180,
                           height: 180,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1,
-                            )
-                          ),
                           child: Column(
                             children: <Widget>[
                               Expanded(
@@ -442,7 +436,7 @@ class __RecordsState extends State<_Records> {
                 final displayedTrack = state.tracks[index];
                 var image = CachedNetworkImageProvider(
                     'https://i.ytimg.com/vi/${displayedTrack.videoId}/mqdefault.jpg' ??
-                          'http://www2.comp.polyu.edu.hk/~16097874d/default.png');
+                          'http://www2.comp.polyu.edu.hk/~16097874d/default.jng');
                 return Container(
                   padding: EdgeInsets.all(5),
                   child: Column(
@@ -453,10 +447,6 @@ class __RecordsState extends State<_Records> {
                           width: 180,
                           height: 180,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1,
-                            ),
                             image: DecorationImage(
                               fit: BoxFit.cover,
                               image: image
