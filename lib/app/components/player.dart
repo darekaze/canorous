@@ -258,6 +258,10 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   }
 
   void _onComplete() {
-    setState(() => _playerState = PlayerState.stopped);
+    setState(() {
+      _playerState = PlayerState.stopped;
+      iconPlayorPause = Icon(Icons.play_arrow);
+      musicName = Text("Music Name");
+    });
   }
 }
