@@ -7,16 +7,32 @@ Made with :sparkling_heart: with Flutter
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Follow the [Flutter Official Guide](https://flutter.dev/docs/get-started/install) to install Flutter & Android Studio, together with the Flutter Plugin.
 
-A few resources to get you started if this is your first Flutter project:
+Ensure that the installation is successful by running:
+```bash
+$ flutter doctor
+```
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+Then, clone the repository from GitHub:
+```bash
+$ git clone https://github.com/darekaze/canorous.git
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.io/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Open the directory using a terminal:
+```bash
+$ cd canorous
+```
+
+Get the packages from pub by running:
+```bash
+$ flutter packages get
+```
+
+Build the apk package by running:
+```bash
+$ flutter build apk --flavor production -t lib/main.dart
+```
 
 ## License
 
