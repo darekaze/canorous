@@ -1,4 +1,4 @@
-# Canorous
+<img src="assets/horizontal.png" alt="canorous" width="600"/>
 
 A Free Modern Application for Streaming and Sharing Awesome Music with Friends :sparkles:
 
