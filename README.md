@@ -12,9 +12,9 @@
 
 ## What is Canorous?
 
-*Canorous* is a free modern native app for Listening and Sharing awesome audio streams with friends.
+*Canorous* (`/kəˈnɔːrəs/`, meaning *pleasant sounding*) is a free modern native app for Listening and Sharing awesome audio streams with friends.
 
-It is made with Flutter :sparkling_heart: following the incredible [BLoC](https://felangel.github.io/bloc/#/architecture) pattern (using the [bloc library](https://felangel.github.io/bloc/#/)).
+It is made with Flutter :sparkling_heart:, following the incredible [BLoC](https://felangel.github.io/bloc/#/architecture) pattern (using the [bloc library](https://felangel.github.io/bloc/#/)).
 
 If you appreciate this app, support this project visibility by giving 👍/⭐
 
