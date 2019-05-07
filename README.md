@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/horizontal.png" alt="Canorous" width="400"/></p>
+<p align="center"><a href="https://github.com/darekaze/canorous" rel="noopener noreferrer"><img src="assets/brand/horizontal.svg" alt="Canorous" width="400"/></a></p>
 
 <p align="center">Listen & Share Awesome Audio Streams with Friends</p>
 
