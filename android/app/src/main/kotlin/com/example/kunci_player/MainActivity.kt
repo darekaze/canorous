@@ -1,4 +1,4 @@
-package com.example.kunci_player
+package com.example.canorous
 
 import io.flutter.embedding.android.FlutterActivity
 
